@@ -1,0 +1,6 @@
+//2019-4-12 引入jQuery
+npm install --save jquery
+jquery配置  https://blog.csdn.net/qq_39588818/article/details/80483969
+
+//2019-4-18 引入xlsx 导入excel
+https://www.cnblogs.com/liguiwang/p/8430672.html

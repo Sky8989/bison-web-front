@@ -1,0 +1,41 @@
+<template>
+  <el-button type="primary" icon="el-icon-download" @click="export2Excel">下载</el-button>
+</template>
+<script>
+export default {
+  props: {
+    tableData: Array,
+    tHeader: Array
+  },
+  data() {
+    return {
+      filterVal: [
+        "businessUnit",
+        "productCategory",
+        "countryName",
+        "userName",
+        "departmentName",
+        "productModelNumber",
+        "asin",
+      ]
+    };
+  },
+  methods: {
+    // 导出表格
+    export2Excel() {
+      var that = this;
+      require.ensure([], () => {
+        const { export_json_to_excel } = require("../../excel/Export2Excel"); //这里必须使用绝对路径
+        const tHeader = that.tHeader; // 导出的表头名
+        const filterVal = that.filterVal; // 导出的表头字段名
+        const list = that.tableData;
+        const data = that.formatJson(filterVal, list);
+        export_json_to_excel(tHeader, data, "产品订阅信息"); // 导出的表格名称，根据需要自己命名
+      });
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => v[j]));
+    }
+  }
+};
+</script>

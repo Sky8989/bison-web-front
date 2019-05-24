@@ -1,0 +1,157 @@
+<template>
+    <div class="productData">
+
+      <el-container>
+
+        <el-aside name="left">
+          <ProductLeftSelect ref="productLeftSelect"  @sendUserChargeList="getUserChargeList"></ProductLeftSelect>
+        </el-aside>
+
+
+        <el-main name="main">
+          <el-table name="showTable" border="border" height="250px" style="width: 100%" :data="userChargeList" @row-click="clickUserCharge">
+            <el-table-column prop="businessUnit" label="BU" ></el-table-column>
+            <el-table-column prop="productCategory" label="产品系列" ></el-table-column>
+            <el-table-column prop="countryName" label="国家" ></el-table-column>
+            <el-table-column prop="userChargeId" label="负责人"  >
+
+              <template slot-scope="scope" :disabled="disabled" >
+                <el-select placeholder="请选择负责人"  clearable  filterable v-model="userChargeId"  @change="chooseUserCharge"    @blur="_blur" @click="_click">
+                              <el-option v-for="user in operationGroupUserList"  :key="user.id" :value="user.id" :label="user.userName" ></el-option>
+                </el-select>
+              </template>
+
+
+            </el-table-column>
+            <el-table-column prop="departmentName" label="运营组别" ></el-table-column>
+            <el-table-column prop="productModelNumber" label="产品型号" ></el-table-column>
+            <el-table-column prop="asin" label="ASIN" ></el-table-column>
+            <el-table-column  label="操作" width="120px"><el-button>删除</el-button></el-table-column>
+          </el-table>
+
+          <br/>
+
+          <div style="float: right">
+            <el-button  type="primary">保存</el-button>
+          </div>
+        </el-main>
+
+      </el-container>
+
+      <!--<div id="left">
+
+
+
+      </div>
+
+
+      <div id="right">
+
+      </div>-->
+
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "ProductData",
+      data(){
+          return{
+            disabled:true,
+            userChargeId:'',
+            productModelNumber:'',
+            userChargeList:[
+             /* {businessUnit:"aaa",productCategory:"bbb",countryName:"Uk",userName:"1号负责人",departmentName:"A组",productModelNumber:"samgda",asin:"aaaa"},
+              {businessUnit:"aaa",productCategory:"bbb",countryName:"Uk",userName:"1号负责人",departmentName:"A组",productModelNumber:"samgda",asin:"aaaa"},*/
+            ],
+            operationGroupUserList:[],
+
+          }
+      },
+      components:{
+        'ProductLeftSelect'  : resolve => require(['components/product/subscription/opts/ProductLeftSelect.vue'], resolve),
+      },
+      methods:{
+          init(){
+            console.log("init ")
+            this.search()
+            this.getOperationGroupUserAll()
+            this.$refs.productLeftSelect.init()
+          },
+        search(){
+          var url = this.HOST + "/productSubscription/findProductSubscriptionList"
+          this.requerstSearch(url)
+        },
+        requerstSearch(url){
+          var data = {
+            productModelNumber:this.productModelNumber,
+          }
+
+          this.$ajax({
+            method:"post",
+            url:url,
+            data:data,
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log("res")
+              console.log(res.data.data)
+              this.userChargeList = res.data.data
+            }
+          }).catch(error => {
+            console.log(error)
+          })
+        },
+        chooseUserCharge(){
+          //更改负责人
+        },
+        getOperationGroupUserAll(){
+          //获取所以运营人员 可以成为产品负责人
+          var url = this.HOST  + "/productSubscription/getOperationGroupUserAll"
+          console.log(url)
+          //var url = this.URL_ROOT + this.URL_PREFIX + "productSubscription/findUserChargeByDeptId/" + deptId
+          this.$ajax.get(url,{
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log("getOperationGroupUserAll")
+              console.log(res.data)
+
+              this.operationGroupUserList = res.data.data
+            }
+          }).then(error => {
+            console.log(error)
+          })
+        },
+        clickUserCharge(row,cell){
+
+            console.log(cell.label)
+            console.log(row)
+
+          if(cell.label != ""){
+            return false
+          }
+          if(cell.label == "负责人"){
+            this.disabled = false
+          }
+        },
+
+        _blur(){
+            console.log("_blur")
+           this.disabled = true
+        },
+        _click(){
+            console.log("click")
+        },
+        getUserChargeList(data){
+            console.log("data")
+            console.log(data)
+            this.userChargeList = []
+            this.userChargeList = data
+        }
+
+      }
+    }
+</script>
+
+<style scoped>
+
+</style>

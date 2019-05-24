@@ -1,0 +1,83 @@
+<template>
+  <el-dialog
+    :visible.sync="status"
+    :width="'400px'"
+    :title="roleItem.roleName"
+  >
+    <el-form :model="formedit" :rules="rules" ref="addRoles" :label-width="'100px'">
+      <el-form-item label="角色名称:" prop="roleName">
+        <el-input v-model="formedit.userDisplayName" autocomplete="off"></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="_show">取 消</el-button>
+      <el-button type="primary" @click="_addRole('addRoles')">确 定</el-button>
+    </div>
+  </el-dialog>
+</template>
+<script>
+const ERR_OK = 200;
+export default {
+  props: ["roleItem", "allRolelList","roleArray"],
+  data() {
+
+    return {
+      status: false,
+      roleId: this.$store.state.LoginedUser.roleId,
+      parentDeptIds: [],
+      formedit: {
+        roleName: ''
+      },
+      // defaultProps: {
+      //     children: "childern",
+      //     label: "roleName",
+      //     value: 'id'
+      // },
+      rules: {
+        roleName: [
+          { required: true, message: "请填写职位名称", trigger: "blur" },
+
+        ]
+      }
+
+    };
+  },
+  methods: {
+    _show() {
+      this.status = this.status ? false : true;
+
+    },
+    // 添加人员
+    _addRole(formName) {
+
+      this.$refs[formName].validate(valid => {
+        let theRoleName = this.formedit.userDisplayName;
+        let theParentId = this.roleItem.roleId;
+        let _param = {
+          roleName : theRoleName ,
+          parentId : theParentId
+        }
+
+          this.$ajax({
+            method: "post",
+            url: this.URL_ROOT + "/login-service/roles/addRole",
+            data: _param
+          }).then(res => {
+            if (res.data.code == ERR_OK) {
+              this.$message.success("新增角色成功");
+              this.$emit("success");
+              this.status = false;
+              this.formedit.roleName = "";
+            } else {
+              this.$message.error(res.data.msg);
+            }
+          });
+
+      });
+    },
+
+  }
+};
+</script>
+
+

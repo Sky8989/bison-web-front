@@ -1,0 +1,366 @@
+<template>
+  <div id="ProductForm">
+    <SearchBar ref="searchBar" @sendSearchResult="receiveProductInfo" @sendBUList="receiveBUList"></SearchBar>
+    <el-form
+      :model="product"
+      label-width="100px"
+      :label-position="labelPosition"
+      class="ProductForm-box-warp"
+    >
+      <!--顶栏容器-->
+      <el-container>
+        <input v-model="product.productId" hidden>
+        <el-main>
+          <el-row>
+            <el-col id="left">
+                  <el-form-item label="型号:">
+                    <el-input
+                      v-model="product.productModelNumber"
+                      class="editAble"
+                      :disabled="disabled"
+                    />
+                  </el-form-item>
+
+                  <el-form-item label="BU:">
+                    <el-select
+                      v-model="product.businessUnitId"
+                      placeholder="BU"
+                      :disabled="disabled"
+                    >
+                      <el-option
+                        v-for="bu in BUList"
+                        :key="bu.businessUnitId"
+                        :value="bu.businessUnitId"
+                        :label="bu.businessUnit"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+
+                  <el-form-item label="品牌:">
+                    <el-select v-model="product.brandId" placeholder="品牌" :disabled="disabled">
+                      <el-option
+                        v-for="brand in brandList"
+                        :key="brand.brandId"
+                        :value="brand.brandId"
+                        :label="brand.brandName"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+
+                  <el-form-item label="系列:">
+                    <el-select
+                      v-model="product.productCategoryId"
+                      placeholder="系列"
+                      :disabled="disabled"
+                    >
+                      <el-option
+                        v-for="productCategory in productCategoryList"
+                        :key="productCategory.productCategoryId"
+                        :value="productCategory.productCategoryId"
+                        :label="productCategory.productCategory"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+
+                  <el-form-item label="长:">
+                    <el-input-number
+                      controls-position="right"
+                      v-model="product.productLong"
+                      :disabled="disabled"
+                    ></el-input-number>
+                  </el-form-item>
+
+                  <el-form-item label="体积:">
+                    <el-input-number
+                      controls-position="right"
+                      v-model="product.productVolume"
+                      :disabled="disabled"
+                    ></el-input-number>
+                  </el-form-item>
+
+                  <el-form-item label="材质:">
+                    <el-input v-model="product.productMaterial" value="材质" :disabled="disabled"/>
+                  </el-form-item>
+
+                  <el-form-item label="宽:">
+                    <el-input-number
+                      controls-position="right"
+                      v-model="product.productWidth"
+                      :disabled="disabled"
+                    ></el-input-number>
+                  </el-form-item>
+
+                  <el-form-item label="毛重:">
+                    <el-input-number
+                      controls-position="right"
+                      v-model="product.productGrossweight"
+                      :disabled="disabled"
+                    ></el-input-number>
+                  </el-form-item>
+
+                  <el-form-item label="认证:">
+                    <el-input
+                      style="display:inline-block;"
+                      v-model="product.productCertification"
+                      :disabled="disabled"
+                    />
+                  </el-form-item>
+
+                  <el-form-item label="高:">
+                    <el-input-number
+                      controls-position="right"
+                      v-model="product.productHeight"
+                      :disabled="disabled"
+                    ></el-input-number>
+                  </el-form-item>
+
+                  <el-form-item label="净重:">
+                    <el-input-number
+                      controls-position="right"
+                      v-model="product.productNetweight"
+                      :disabled="disabled"
+                    ></el-input-number>
+                  </el-form-item>
+
+                  <el-form-item label="包装内含物:">
+                    <el-input
+                      style="display:inline-block;"
+                      v-model="product.productPackageContains"
+                      :disabled="disabled"
+                    />
+                  </el-form-item>
+
+                  <el-form-item label="ODR:">
+                    <el-input-number
+                      controls-position="right"
+                      v-model="product.productOrderDefect"
+                      :step="0.01"
+                      :disabled="disabled"
+                    ></el-input-number>
+                  </el-form-item>
+
+                  <el-form-item label="U8编码:">
+                    <el-input v-model="product.productU8Code" :disabled="disabled"></el-input>
+                  </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="18">
+              <div class="title">产品描述:</div>
+              <el-input
+                class="textarea"
+                type="textarea"
+                v-model="product.productDescriptionChs"
+                :autosize="{minRows:3,maxRows:6}"
+                placeholder="中文描述"
+                :disabled="disabled"
+              ></el-input>
+              <el-input
+                class="textarea"
+                type="textarea"
+                v-model="product.productDescriptionEn"
+                :autosize="{minRows:3,maxRows:6}"
+                placeholder="英文描述"
+                :disabled="disabled"
+                style="margin-top:10px;"
+              ></el-input>
+            </el-col>
+            <div id="right" class="avatar" :span="5">
+              <img :src="product.productImgUrl" >
+            </div>
+          </el-row>
+          <el-button @click="submitProduct" type="primary">编辑/提交</el-button>
+        </el-main>
+      </el-container>
+    </el-form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ProductForm",
+  components: {
+    SearchBar: resolve =>
+      require(["components/product/detail/SearchBar.vue"], resolve)
+  },
+  data() {
+    return {
+      disabled: true, //默认不可以编辑
+      labelPosition: "right",
+      imageUrl:
+        "http://192.168.1.68:10021/static/IMAGE/2019.4/93340965c78f4639aee78bafe0b4058d.jpg",
+      product: {
+        brandId: 0,
+        cTime: null,
+        productCategoryId: 0,
+        productCertification: "",
+        productDescriptionChs: "",
+        productDescriptionEn: "",
+        productGrossweight: 0.0,
+        productHeight: 0.0,
+        businessUnit: "",
+        businessUnitId: 0,
+        productId: 0,
+        productLong: 0.0,
+        productMaterial: "",
+        productModelNumber: "",
+        productNetweight: 0.0,
+        productPackageContains: "",
+        productVolume: 0,
+        productWidth: 0.0,
+        status: 0,
+        userId: 0,
+        productU8Code: 0,
+        productOrderDefect: 0.0,
+        productImgUrl: ""
+      },
+      BUList: [],
+      brandList: [], //所有品牌
+      productCategoryList: [], //所有产品系列
+      businessUnitList: [] //所有部门
+    };
+  },
+  mounted() {},
+  methods: {
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(this.imageUrl);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      /*if (!isJPG) {
+            this.$message.error('上传头像图片只能是 JPG 格式!');
+          }*/
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
+    submitProduct() {
+      console.log(this.disabled);
+
+      //第一次进来默认为true 每次点击一下 切换到相反的值
+      this.disabled = !this.disabled;
+      $(".editAble").attr("disabled", this.disabled);
+
+      console.log(this.disabled);
+
+      if (!this.disabled) {
+        this.$message.info("可以编辑啦");
+        return;
+      }
+      console.log("保存产品");
+
+      if (this.product.productId == null || this.product.productId == 0) {
+        this.$message("请先查询对应产品编辑后保存");
+        return false;
+      }
+      console.log(this.product.productId);
+      var url =
+        this.URL_ROOT +
+        this.URL_PREFIX +
+        "/product/update/" +
+        this.product.productId;
+
+      this.$ajax
+        .put(url, {
+          productId: this.product.productId,
+          productModelNumber: this.product.productModelNumber,
+          businessUnitId: this.product.businessUnitId,
+          brandId: this.product.brandId,
+          productCategoryId: this.product.productCategoryId,
+          productLong: this.product.productLong,
+          productWidth: this.product.productWidth,
+          productHeight: this.product.productHeight,
+          productVolume: this.product.productVolume,
+          productNetweight: this.product.productNetweight,
+          productGrossweight: this.product.productGrossweight,
+          productMaterial: this.product.productMaterial,
+          productPackageContains: this.product.productPackageContains,
+          productOrderDefect: this.product.productOrderDefect,
+          productU8Code: this.product.productU8Code,
+          productCertification: this.product.productCertification,
+          productDescriptionChs: this.product.productDescriptionChs,
+          productDescriptionEn: this.product.productDescriptionEn,
+          userId: this.product.userId
+        })
+        .then(res => {
+          if (res.data.code == "200") {
+            this.$message({ type: "info", message: "保存成功" });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    receiveProductInfo(data) {
+      //先清除数据
+      this.product = null;
+
+      this.product = data.productDetails; //产品信息
+      this.brandList = data.brandList;
+      this.productCategoryList = data.productCategoryList;
+      this.businessUnitList = data.businessUnitList;
+
+      console.log("product save store");
+      //将product对象存入到 store中
+      this.$store.commit("setProduct", data.productDetails);
+
+      //存在商品返回的是object类型 不存在返回string
+      var type = typeof data;
+      if (type == "string") {
+        this.$message(data);
+        return;
+      }
+    },
+    receiveBUList(data) {
+      this.BUList = data;
+    }
+  }
+};
+</script>
+
+<style lang="stylus">
+.ProductForm-box-warp {
+  border-radius: 2px;
+  border: 1px solid #DCDFE6; 
+  padding: 1px 1px 1px 1px;
+  .avatar{
+    float right
+    margin 25px 50px 0 50px;
+    img{
+      display inline-block
+      width 200px;
+      height 200px;
+    }
+  }
+  .el-textarea.is-disabled .el-textarea__inner,.el-input__inner{
+    border-radius 0
+  }
+  .el-form-item{
+    margin-bottom: 10px;
+  }
+  .el-input.is-disabled .el-input__inner,.el-textarea.is-disabled .el-textarea__inner{
+    color #000
+    text-align left
+  }
+  .title{
+    padding-bottom 10px
+    color #333
+  }
+  .textarea{
+    margin-bottom 10px;
+  }
+  .el-form-item{
+    width 340px;
+    display: inline-block;
+    .el-input-number,.el-select{
+      width: 100%;
+    }
+  }
+}
+</style>
+ 

@@ -1,0 +1,52 @@
+<template>
+  <div class="product-warp">
+    <ProductForm ref="productForm"></ProductForm>
+    <br>
+    <!--产品相关联信息操作-->
+    <Tabs ref="tabs"></Tabs>
+  </div>
+ 
+</template>
+<script>
+  export default {
+    name: 'product',
+    components: {
+
+      Tabs: resolve =>
+        require(["components/product/detail/Tabs.vue"], resolve),
+      ProductForm: resolve =>
+        require(["components/product/detail/ProductForm.vue"], resolve),
+      Image: resolve =>
+        require(["components/product/detail/Image.vue"], resolve),
+      Document: resolve =>
+        require(["components/product/detail/Document.vue"], resolve),
+      Principal: resolve =>
+        require(["components/product/detail/Principal.vue"], resolve),
+      Listting: resolve =>
+        require(["components/product/detail/Listting.vue"], resolve),
+      Supplier: resolve =>
+        require(["components/product/detail/Supplier.vue"], resolve),
+      CodedInfo: resolve =>
+        require(["components/product/detail/CodedInfo.vue"], resolve),
+    },
+    data() {
+      return {
+        border: true,
+        dialogImageUrl: '',
+        dialogVisible: false,
+        imageUrl: "",
+      }
+    }
+  }
+</script>
+<style lang="stylus" scoped>
+.product-warp{
+    .product-title{
+      display inline-block
+      width:144px; 
+      color #333 
+      padding 0 0 10px 0;
+    }
+  }
+</style>
+

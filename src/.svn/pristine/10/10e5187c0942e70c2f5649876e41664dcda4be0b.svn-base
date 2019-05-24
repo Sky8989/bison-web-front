@@ -1,0 +1,447 @@
+<template>
+
+
+  <el-container>
+    <el-aside name="left">
+      <UserLeftSelect ref="userLeftSelect" @sendUserIds="getUserIds"></UserLeftSelect>
+    </el-aside>
+
+    <el-main name="main">
+      <el-row >
+        <el-col :span="4">
+          <el-button style="float: left" @click="addProductSub = true">新增产品</el-button>
+        </el-col>
+      </el-row>
+
+      <el-dialog title="新增产品" :visible.sync="addProductSub" style="width: auto; height: auto;" >
+
+        <el-form label-width="100px" :model="form" :label-position="LabelPosition"  encType="multipart/form-data">
+
+          <!-- <input v-model="form.sellerSkuId" hidden/>
+           <input v-model="form.countryId" hidden/>
+           <input v-model="form.sellerId" hidden/>
+ -->
+
+
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="国家">
+                <el-select  placeholder="请选择国家" filterable v-model="form.countryId">
+                  <el-option v-for="country in countryList" :label="country.countryName" :key="country.countryId" :value="country.countryId"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+
+          <el-row >
+            <el-col :span="6">
+              <el-form-item label="产品系列">
+                <el-select  placeholder="请选择产品系列" filterable v-model="form.productCategory"  @change="chooseProductCategory('form')">
+                  <el-option v-for="productCategory in productCategoryList" :key="productCategory.productCategoryId" :value="productCategory.productCategoryId" :label="productCategory.productCategory"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row >
+            <el-col :span="7">
+              <el-form-item label="产品型号">
+                <el-select  placeholder="请选择产品型号"  filterable v-model="form.productModelNumber" @change="chooseProductModelNumber('form')">
+                  <el-option v-for="product in productList" :key="product.productModelNumber" :value="product.productModelNumber" :label="product.productModelNumber"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row >
+            <el-col :span="7">
+              <el-form-item label="ASIN">
+                <el-select  placeholder="请选择ASIN" filterable v-model="form.asinId" @change="chooseAsin('form')">
+                  <el-option v-for="asin in asinList"  :key="asin.asinId" :value="asin.asinId" :label="asin.asin"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+
+
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addProductSub = false">取 消</el-button>
+          <el-button type="primary" @click="submitProductSub">确 定</el-button>
+        </div>
+
+      </el-dialog>
+
+      <!--搜索编码信息-->
+      <el-form :model="searchInfo"  >
+        <el-form-item style="float: left">
+          <el-row :gutter="10">
+
+            <el-col :span="4">
+              <el-select placeholder="产品系列"  filterable clearable  v-model="searchInfo.productCategory"  @change="chooseProductCategory">
+                <el-option v-for="productCategory in productCategoryList" :key="productCategory.productCategoryId" :value="productCategory.productCategoryId" :label="productCategory.productCategory"></el-option>
+
+              </el-select>
+            </el-col>
+
+
+            <el-col :span="4">
+              <el-select placeholder="产品型号"  clearable  v-model="searchInfo.productModelNumber"  @change="chooseProductModelNumber">
+                <el-option v-for="product in productList" :key="product.productModelNumber" :value="product.productModelNumber" :label="product.productModelNumber"></el-option>
+
+              </el-select>
+            </el-col>
+
+            <el-col :span="3">
+              <el-select placeholder="ASIN" clearable  filterable v-model="searchInfo.asinId" >
+                <el-option v-for="asin in asinList"  :key="asin.asinId" :value="asin.asinId" :label="asin.asin"></el-option>
+
+              </el-select>
+            </el-col>
+
+            <el-col :span="3">
+              <el-button @click="search">搜索</el-button>
+            </el-col>
+
+            <el-col :span="2">
+              <download  :tHeader="tHeader" :tableData="userChargeList"></download>
+            </el-col>
+
+
+          </el-row>
+        </el-form-item>
+
+      </el-form>
+
+
+
+
+      <el-table name="showTable" border="border" height="250px" style="width: 100%" :data="userChargeList" @cell-click="deleteUserCharge">
+        <el-table-column prop="businessUnit" label="BU" width="160px" ></el-table-column>
+        <el-table-column prop="productCategory" label="产品系列" width="160px"></el-table-column>
+        <el-table-column prop="countryName" label="国家" width="260px" >
+          <template slot="header" slot-scope="scope">
+            <el-select placeholder="请选择国家" multiple clearable   filterable v-model="tableHeadCountry" @change="chooseCountry"   >
+              <el-option v-for="country in countryList"  :key="country.countryId" :value="country.countryId" :label="country.countryName"></el-option>
+            </el-select>
+          </template>
+        </el-table-column>
+        <el-table-column prop="userName" label="负责人"  width="160px"></el-table-column>
+        <el-table-column prop="departmentName" label="运营组别" ></el-table-column>
+        <el-table-column prop="productModelNumber" label="产品型号" ></el-table-column>
+        <el-table-column prop="asin" label="ASIN" ></el-table-column>
+        <el-table-column  label="操作" width="120px"><el-button @click="addProductSub = true">删除</el-button></el-table-column>
+
+      </el-table>
+
+    </el-main>
+  </el-container>
+
+    <!--<div class="userData">
+
+
+    </div>-->
+</template>
+
+<script>
+    export default {
+      name: "UserData",
+      components: {
+        download: resolve =>
+          require(["components/xlsx/download.vue"], resolve),
+        UserLeftSelect:resolve =>
+          require(['components/product/subscription/opts/UserLeftSelect.vue'], resolve),
+      },
+      data(){
+          return{
+            tableHeadCountry:'',
+            form:{
+              productCategory:"",
+              productModelNumber:"",
+              asinId:"",
+              countryId:"",
+
+            },
+            searchInfo:{
+              productCategory :"",
+              productModelNumber :"",
+              asinId :"",
+              userCharges:"",
+
+            },
+            addProductSub:false,
+            LabelPosition:"left",
+            userChargeList:[
+              // {businessUnit:"aaa",productCategory:"bbb",countryName:"Uk",userName:"1号负责人",departmentName:"A组",productModelNumber:"samgda",asin:"aaaa"},
+              // {businessUnit:"aaa",productCategory:"bbb",countryName:"Uk",userName:"1号负责人",departmentName:"A组",productModelNumber:"samgda",asin:"aaaa"},
+              // {businessUnit:"aaa",productCategory:"bbb",countryName:"Uk",userName:"1号负责人",departmentName:"A组",productModelNumber:"samgda",asin:"aaaa"},
+            ],
+            productCategoryList:[],
+            productList:[],
+            asinList:[],
+            tHeader: [
+              "BU",
+              "产品系列",
+              "国家",
+              "负责人",
+              "运营组别",
+              "产品型号",
+              "ASIN",
+            ],
+            countryList:[],
+
+
+          }
+      },
+      methods:{
+          init(){
+
+              this.initProductCategory()
+              this.initModelNumber()
+              this.initAsin()
+              this.initCountry()
+
+            this.$refs.userLeftSelect.init()
+          },
+        initProductCategory(){ //所有产品系列
+          var url = this.HOST  + "/productSubscription/findProductCategoryAll"
+          this.$ajax.get( url,{
+          }).then(res => {
+            if(res.data.code == "200"){
+              var data = res.data.data
+              this.productCategoryList = data
+            }
+          })
+        },
+        initModelNumber(){ //所有产品型号
+          var url = this.HOST  + "/productSubscription/findModelNumberAll"
+          this.$ajax.get( url,{
+          }).then(res => {
+            if(res.data.code == "200"){
+              var data = res.data.data
+              this.productList = data
+            }
+          })
+        },
+        initAsin(){ //所有Asin
+          var url = this.HOST  + "/productSubscription/findAsinAll"
+          this.$ajax.get( url,{
+          }).then(res => {
+            if(res.data.code == "200"){
+
+              this.asinList = []
+              this.asinList = res.data.data
+
+
+            }
+          })
+        },
+        initCountry(){ //所有Asin
+          var url = this.HOST  + "/findProductCharge/findCountry"
+          this.$ajax.get( url,{
+          }).then(res => {
+            if(res.data.code == "200"){
+
+              this.countryList = res.data.data
+            }
+          })
+        },
+        chooseProductCategory(name){
+          var productCategoryId =  ''
+          if(name === "form"){
+            productCategoryId = this.form.productCategory
+          }else{
+            productCategoryId = this.searchInfo.productCategory
+          }
+
+          //清空 产品型号
+          var url = this.HOST  + "/productSubscription/findModelNumberByproductCategoryId/" + productCategoryId
+          console.log(url)
+          //var url = this.URL_ROOT + this.URL_PREFIX + "productSubscription/findUserChargeByDeptId/" + deptId
+          this.$ajax.get(url,{
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log(res.data)
+              //清空负责人
+              this.productList = []
+              this.productList = res.data.data
+            }
+          }).then(error => {
+            console.log(error)
+          })
+
+          //清空 Asin
+          var url1 = this.HOST  + "/productSubscription/findAsinByproductCategoryId/" + productCategoryId
+          console.log(url1)
+          //var url = this.URL_ROOT + this.URL_PREFIX + "productSubscription/findUserChargeByDeptId/" + deptId
+          this.$ajax.get(url1,{
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log(res.data)
+              //清空 Asin
+              this.asinList = []
+              this.asinList = res.data.data
+            }
+          }).then(error => {
+            console.log(error)
+          })
+
+        },
+        chooseProductModelNumber(name){
+          var productModelNumber =  ''
+          if(name === "form"){
+            productModelNumber = this.form.productModelNumber
+          }else{
+            productModelNumber = this.searchInfo.productModelNumber
+          }
+          var url = this.HOST + "/productSubscription/findAsinByproductModelNumber/" + productModelNumber
+
+          this.$ajax.get(url,{
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log(res.data)
+              //清空 Asin
+              this.asinList = []
+              this.asinList = res.data.data
+            }
+          }).then(error => {
+            console.log(error)
+          })
+        },
+        chooseAsin(name){
+          var asinId =  ''
+            if(name === "form"){
+              asinId = this.form.asinId
+            }else{
+              asinId = this.searchInfo.asinId
+            }
+
+          var url = this.HOST + "/productSubscription/findProductInByAsin/" + asinId
+
+          this.$ajax.get(url,{
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log(res.data.data)
+
+              if(res.data.data != null){
+                this.form = []
+                this.form = res.data.data
+              }
+              //清空 Asin
+             // this.asinList = []
+             // this.asinList = res.data.data
+            }
+          }).then(error => {
+            console.log(error)
+          })
+
+        },
+        chooseCountry(){
+          var url = this.HOST + "/productSubscription/findProductSubscriptionList"
+          this.requerstSearch(url)
+        },
+        search(){
+          var url = this.HOST + "/productSubscription/findProductSubscriptionList"
+          this.requerstSearch(url)
+        },
+        requerstSearch(url){
+          var data = {
+            userCharges:this.searchInfo.userCharges,
+            productCategory:this.searchInfo.productCategory,
+            productModelNumber:this.searchInfo.productModelNumber,
+            asinId:this.searchInfo.asinId,
+            countryIds:this.tableHeadCountry,
+          }
+
+
+          this.$ajax({
+            method:"post",
+            url:url,
+            data:data,
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log("res")
+              console.log(res.data.data)
+              this.userChargeList = res.data.data
+            }
+          }).catch(error => {
+            console.log(error)
+          })
+        },
+        submitProductSub(){
+            var userIds = this.searchInfo.userCharges
+          if(userIds == null || userIds.length <= 0 ){
+            this.$message.error("请先选中对应人员,在进行添加操作")
+            return
+          }
+
+          var data = {
+            productCategoryId:this.form.productCategory,
+            productModelNumber:this.form.productModelNumber,
+            asinId:this.form.asinId,
+            countryId:this.form.countryId,
+            userId:this.searchInfo.userCharges,
+          }
+
+          var url = this.HOST + "/productSubscription/addProductByUserCharge"
+
+          this.$ajax({
+            method:"post",
+            url:url,
+            data:data,
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log("res")
+              console.log(res.data.data)
+              this.userChargeList = res.data.data
+            }
+          }).catch(error => {
+            console.log(error)
+          })
+
+
+
+        },
+        deleteUserCharge(row,cell){
+          console.log(cell.label)
+          console.log(row)
+
+          //删除操作
+
+
+
+          this.$ajax({
+            method:"post",
+            url:url,
+            data:data,
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log("res")
+              console.log(res.data.data)
+              this.userChargeList = res.data.data
+            }
+          }).catch(error => {
+            console.log(error)
+          })
+
+        },
+        //获取选中的用户id
+        getUserIds(data){
+            console.log("data")
+            console.log(data)
+
+          this.searchInfo.userCharges = data
+          console.log(this.searchInfo.userCharges)
+          this.search()
+        }
+      },
+    }
+</script>
+
+<style scoped>
+
+
+</style>

@@ -1,0 +1,546 @@
+<template>
+  <div id="CodedInfo">
+    <el-row>
+      <el-col :span="4">
+        <el-button style="float: left" @click="addCodedInfo = true">新增+</el-button>
+      </el-col>
+    </el-row>
+
+    <el-dialog
+      title="新增/编辑"
+      :visible.sync="addCodedInfo"
+      style="width: auto; height: auto;"
+      @close="closeDialog"
+    >
+      <el-form
+        label-width="100px"
+        :model="form"
+        :label-position="LabelPosition"
+        enctype="multipart/form-data"
+      >
+        <input v-model="form.sellerSkuId" hidden>
+        <input v-model="form.countryId" hidden>
+        <input v-model="form.sellerId" hidden>
+
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="Model No:">
+              <span>{{this.$store.state.product.productModelNumber}}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <!-- <el-form-item label="Part No:">
+               &lt;!&ndash; <el-input v-model="form.partNo"></el-input>&ndash;&gt;
+                <span>{{form.partNo}}</span>
+            </el-form-item>-->
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="国家:">
+              <el-select placeholder="请选择国家" v-model="form.country">
+                <el-option
+                  v-for="country in countrys"
+                  :label="country.countryName"
+                  :key="country.countryId"
+                  :value="country.countryId"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="账号:">
+              <el-select
+                placeholder="请选择账号"
+                v-model="form.seller"
+                @change="chooseSeller"
+                selected="selected"
+              >
+                <el-option
+                  v-for="seller in sellerList"
+                  :key="seller.sellerId"
+                  :value="seller.sellerId"
+                  :label="seller.sellerName"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="ASIN:">
+              <el-select placeholder="ASIN" filterable allow-create v-model="form.asin">
+                <el-option v-for="asin in asinList" :key="asin" :value="asin" :label="asin"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="UPC:">
+              <el-input v-model="form.UPC"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="发货方式:">
+              <el-select placeholder="发货方式" v-model="form.transportType">
+                <el-option
+                  v-for="transportType in transportTypeList"
+                  :key="transportType.text"
+                  :value="transportType.text"
+                  :label="transportType.text"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="6">
+            <el-form-item label="SKU:">
+              <el-select placeholder="SKU" filterable allow-create v-model="form.sku">
+                <el-option
+                  v-for="sku in skuAndFnSkuList"
+                  :key="sku.sku"
+                  :value="sku.sku"
+                  :label="sku.sku"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="6">
+            <el-form-item label="FNSKU:">
+              <el-select placeholder="FNSKU" filterable allow-create v-model="form.fnsku">
+                <el-option
+                  v-for="sku in skuAndFnSkuList"
+                  :key="sku.fnsku"
+                  :value="sku.fnsku"
+                  :label="sku.fnsku"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addCodedInfo = false">取 消</el-button>
+        <el-button type="primary" @click="submitCodedInfo">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--搜索编码信息-->
+    <el-form :model="searchInfo">
+      <el-form-item style="float: left">
+        <el-row :gutter="10">
+          <el-col :span="3">
+            <el-select
+              placeholder="账号"
+              filterable
+              clearable
+              v-model="searchInfo.seller"
+              @change="chooseSeller"
+            >
+              <el-option
+                v-for="seller in sellerList"
+                :key="seller.sellerId"
+                :value="seller.sellerId"
+                :label="seller.sellerName"
+              ></el-option>
+            </el-select>
+          </el-col>
+
+          <el-col :span="3">
+            <el-select placeholder="ASIN" clearable v-model="searchInfo.asin">
+              <el-option v-for="asin in asinList" :key="asin" :value="asin" :label="asin"></el-option>
+            </el-select>
+          </el-col>
+
+          <el-col :span="3">
+            <el-select placeholder="SKU" clearable filterable v-model="searchInfo.sku">
+              <el-option
+                v-for="sku in skuAndFnSkuList"
+                :key="sku.sku"
+                :value="sku.sku"
+                :label="sku.sku"
+              ></el-option>
+            </el-select>
+          </el-col>
+
+          <el-col :span="3">
+            <el-select placeholder="FNSKU" clearable filterable v-model="searchInfo.fnsku">
+              <el-option
+                v-for="fnsku in skuAndFnSkuList"
+                :key="fnsku.fnsku"
+                :value="fnsku.fnsku"
+                :label="fnsku.fnsku"
+              ></el-option>
+            </el-select>
+          </el-col>
+
+          <el-col :span="3">
+            <el-button @click="search">搜索</el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+    </el-form>
+
+    <el-table :data="codedInfoList" height="250px" border="border" @cell-click="editCodedInfo">
+      <!--        :filter-method="filter_select_model" label="model" :filters="[{text:'1',value:'1'},{text:'2',value:'2'}]"-->
+      <el-table-column prop="sellerSkuId" label="id"></el-table-column>
+
+      <el-table-column prop="productModelNumber" label="model"></el-table-column>
+
+      <el-table-column prop="sellerName" label="账号"></el-table-column>
+
+      <el-table-column
+        prop="countryName"
+        label="国家"
+        :filters="countryList"
+        :filter-method="filterCountry"
+      ></el-table-column>
+
+      <el-table-column prop="asin" label="ASIN"></el-table-column>
+
+      <el-table-column prop="sku" label="SKU"></el-table-column>
+
+      <el-table-column prop="fnsku" label="FNSKU"></el-table-column>
+
+      <el-table-column prop="upc" label="UPC"></el-table-column>
+
+      <el-table-column
+        prop="transportType"
+        label="发货方式"
+        :filters="transportTypeList"
+        :filter-method="filterTransportType"
+      ></el-table-column>
+
+      <el-table-column prop="record" label="记录人"></el-table-column>
+
+      <el-table-column prop="edit" label="编辑">
+        <el-button @click="addCodedInfo = true">编辑</el-button>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "CodedInfo",
+  data() {
+    return {
+      LabelPosition: "right",
+      addCodedInfo: false,
+      searchInfo: { seller: "", asin: "", sku: "", fnsku: "" },
+      codedInfoList: [],
+      form: {
+        country: "",
+        countryId: "",
+        seller: "",
+        sellerId: "",
+        asin: "",
+        UPC: "",
+        transportType: "",
+        sku: "",
+        fnsku: "",
+        sellerSkuId: ""
+      },
+      countryList: [], //表头过滤数据
+      sellerList: [],
+      asinList: [],
+      transportTypeList: [],
+      skuAndFnSkuList: [],
+      countrys: []
+    };
+  },
+  methods: {
+    getProductId() {
+      console.log("getProductId");
+      var productId = this.$store.state.product.productId;
+      if (productId == null || productId == "") {
+        this.$message("请先选择产品");
+        return;
+      }
+      return productId;
+    },
+
+    init() {
+      //表头国家list
+      this.getCountryList();
+      //搜索框卖家list
+      this.getSellerList();
+      this.getTransportTypeList();
+      this.firstSearchCodedInfo(this.getProductId());
+      this.findCountryByProductId(this.getProductId());
+      // this.searchCodedInfo(this.getProductId())
+    },
+    firstSearchCodedInfo(productId) {
+      this.$refs.filterTable.clearFilter();
+
+      console.log("firstSearchCodedInfo");
+
+      if (productId == null || productId == "") {
+        //  this.$message("请先选择产品")
+        return false;
+      }
+      var url =
+        this.URL_ROOT +
+        this.URL_PREFIX +
+        "/productCoded/findProductCodeInformationByProductId";
+
+      this.$ajax
+        .get(url, {
+          params: { productId: productId }
+        })
+        .then(res => {
+          if (res.data.code == "200") {
+            // console.log(res.data.data)
+            this.codedInfoList = res.data.data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    search() {
+      console.log("提交搜索信息");
+      var productId = this.getProductId();
+      console.log(
+        "seller = " +
+          this.searchInfo.seller +
+          "  asin = " +
+          this.searchInfo.asin +
+          " sku=" +
+          this.searchInfo.sku +
+          " fnsku=" +
+          this.searchInfo.fnsku
+      );
+      if (productId == null || productId == "") {
+        //  this.$message("请先选择产品")
+        return false;
+      }
+
+      var url =
+        this.URL_ROOT +
+        this.URL_PREFIX +
+        "/productCoded/findByProductIdAndSellerIdAndAsinAndSkuAndFnsku";
+
+      this.$ajax
+        .get(url, {
+          params: {
+            productId: productId,
+            sellerId: this.searchInfo.seller,
+            asin: this.searchInfo.asin,
+            sku: this.searchInfo.sku == null ? "" : this.searchInfo.sku,
+            fnsku: this.searchInfo.fnsku == null ? "" : this.searchInfo.fnsku
+          }
+        })
+        .then(res => {
+          if (res.data.code == "200") {
+            if (res.data.data == null || res.data.data.length == 0) {
+              this.$message.info("查询结果为空");
+            }
+            this.codedInfoList = res.data.data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    submitCodedInfo() {
+      console.log("添加编码信息");
+      var form = this.form;
+      var sellerSkuId = form.sellerSkuId;
+      console.log(sellerSkuId);
+
+      var url = this.URL_ROOT + this.URL_PREFIX;
+      var sellerId = null;
+      if (sellerSkuId != null && sellerSkuId != "") {
+        url += "/productCoded/updateProductCodedInformation";
+        sellerId = form.sellerId;
+      } else {
+        url += "/productCoded/addProductCodedInformation";
+        sellerId = form.seller;
+      }
+
+      var data = {
+        userId: 1,
+        productId: this.getProductId(),
+        productModelNumber: this.$store.state.product.productModelNumber,
+        sellerId: sellerId,
+        countryId: form.country,
+        sellerSkuId: form.sellerSkuId,
+        // asinId: form.asin,
+        asin: form.asin,
+        sku: form.sku,
+        fnsku: form.fnsku,
+        upc: form.UPC,
+        transportType: form.transportType,
+        record: "当前用户"
+      };
+      console.log("data");
+      console.log(data);
+
+      this.$ajax({
+        method: "post",
+        url: url,
+        data: data
+      })
+        .then(res => {
+          if (res.data.code == "200") {
+            console.log(res.data.data);
+            this.codedInfoList = res.data.data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      this.addCodedInfo = false;
+    },
+    filterCountry(value, row) {
+      console.log("value = " + value);
+      console.log(row);
+      return row.countryName == value;
+    },
+    filterTransportType(value, row) {
+      return row.transportType == value;
+    },
+    getCountryList() {
+      var url =
+        this.URL_ROOT + this.URL_PREFIX + "/productCoded/findCountryList";
+      this.$ajax
+        .get(url, {})
+        .then(res => {
+          if (res.data.code == "200") {
+            //返回来的数据  {"text": "Germany","value": 1},
+            console.log(res.data.data);
+
+            this.countryList = res.data.data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getSellerList() {
+      var url =
+        this.URL_ROOT + this.URL_PREFIX + "/productCoded/findSellerList";
+      this.$ajax
+        .get(url, {})
+        .then(res => {
+          if (res.data.code == "200") {
+            //返回来的数据  {"text": "Germany","value": 1},
+            console.log(res.data.data);
+            this.sellerList = res.data.data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getTransportTypeList() {
+      var url =
+        this.URL_ROOT + this.URL_PREFIX + "/productCoded/findTransportType";
+      this.$ajax
+        .get(url, {})
+        .then(res => {
+          if (res.data.code == "200") {
+            //返回来的数据  {"text": "Germany","value": 1},
+            console.log(res.data.data);
+            this.transportTypeList = res.data.data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    chooseSeller() {
+      var sellerId = this.searchInfo.seller;
+      if (sellerId == null || sellerId == "") {
+        sellerId = this.form.seller;
+      }
+
+      var url =
+        this.URL_ROOT +
+        this.URL_PREFIX +
+        "/productCoded/findAsinByProductIdAndSellerId";
+      this.$ajax
+        .get(url, {
+          params: {
+            productId: this.getProductId(),
+            sellerId: sellerId
+          }
+        })
+        .then(res => {
+          if (res.data.code == "200") {
+            //返回来的数据  {"text": "Germany","value": 1},
+            console.log(res.data.data);
+            this.asinList = res.data.data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+
+    findCountryByProductId(productId) {
+      var url =
+        this.URL_ROOT +
+        this.URL_PREFIX +
+        "/findProductCharge/findProductUserCountryByProductId/" +
+        productId;
+
+      this.$ajax
+        .get(url, {})
+        .then(res => {
+          if (res.data.code == "200") {
+            console.log(res.data.data);
+            this.countrys = res.data.data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    editCodedInfo(row, cell) {
+      console.log(cell.label);
+      console.log(row);
+
+      if (cell.label != "编辑") {
+        return false;
+      }
+
+      this.form.sellerSkuId = row.sellerSkuId;
+      this.form.countryId = row.countryId;
+      // this.form.country = row.countryName
+      this.form.country = row.countryId;
+      // this.form.seller = row.sellerName
+      this.form.seller = row.sellerId;
+      this.form.sellerId = row.sellerId;
+      this.form.asin = row.asin;
+      this.form.UPC = row.upc;
+      this.form.transportType = row.transportType;
+      this.form.sku = row.sku;
+      this.form.fnsku = row.fnsku;
+    },
+    closeDialog() {
+      console.log("closeDialog 关闭回调");
+      this.form = {
+        country: "",
+        countryId: "",
+        seller: "",
+        sellerId: "",
+        asin: "",
+        UPC: "",
+        transportType: "",
+        sku: "",
+        fnsku: "",
+        sellerSkuId: ""
+      };
+    }
+  }
+};
+</script>
+
+<style scoped>
+</style>

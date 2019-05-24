@@ -1,0 +1,45 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+Vue.use(Router)
+
+const routes = [
+  {
+    path: '/',
+    title: 'bison后台管理',
+    redirect: '/index'
+  }, {
+    path: '/login',
+    name: '登录页面',
+    component: resolve => require(['../components/login/login.vue'], resolve),
+    meta: {
+      navShow: true
+    }
+  }, {
+    path: '/index',
+    component: resolve => require(['../components/index/index.vue'], resolve),
+  }, {
+    path: '/user-subscription',
+    component: resolve => require(['../components/user/subscription/subscription.vue'], resolve),
+  }, {
+    path: '/user-password',
+    component: resolve => require(['../components/user/modifyPassword/modifyPassword.vue'], resolve)
+  }, {
+    path: '/department',
+    component: resolve => require(['../components/department/department.vue'], resolve),
+  }, {
+    path: '/roleManager',
+    component: resolve => require(['../components/role/roleManager.vue'], resolve),
+  }, {
+    path: '/product',
+    component: resolve => require(['../components/product/Product.vue'], resolve),
+  },
+  {
+    path: '/productSubscription',
+    component: resolve => require(['../components/product/subscription/Subscription.vue'], resolve),
+  },
+]
+
+export default new Router({
+  linkActiveClass: 'active',
+  routes
+});

@@ -1,0 +1,371 @@
+<template>
+  <div id="Document" class="Document-product-warp">
+    <el-row :gutter="5">
+      <el-col :span="20">
+        <el-col :span="4" name="docType">
+          <el-button
+            id="docType-1"
+            style="display: block; width: 130px"
+            @click="chooseDocType('docType-1')"
+          >产品listing文案</el-button>
+          <el-button
+            id="docType-2"
+            style="display: block;margin-left: 0px;width: 130px"
+            @click="chooseDocType('docType-2')"
+          >产品定义文档</el-button>
+          <el-button
+            id="docType-3"
+            style="display: block;margin-left: 0px;width: 130px"
+            @click="chooseDocType('docType-3')"
+          >认证文件</el-button>
+          <el-button
+            id="docType-4"
+            style="display: block;margin-left: 0px;width: 130px"
+            @click="chooseDocType('docType-4')"
+          >结构文件</el-button>
+          <el-button
+            id="docType-5"
+            style="display: block;margin-left: 0px;width: 130px"
+            @click="chooseDocType('docType-5')"
+          >立项资料</el-button>
+          <el-button
+            id="docType-6"
+            style="display: block;margin-left: 0px;width: 130px"
+            @click="chooseDocType('docType-6')"
+          >申述文件</el-button>
+          <el-button
+            id="docType-7"
+            style="display: block;margin-left: 0px;width: 130px"
+            @click="chooseDocType('docType-7')"
+          >其他</el-button>
+        </el-col>
+
+        <el-col :span="16" name="docList">
+          <el-upload
+            ref="upload"
+            name="files"
+            class="upload-demo"
+            multiple
+            :limit="10"
+            :on-exceed="uploadExceed"
+            :action="action"
+            :before-upload="beforeUploadPicture"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :on-success="onSuccess"
+            :on-error="uploadError"
+            :file-list="fileList"
+            :auto-upload="false"
+            :data="params"
+            style="height: auto"
+          >
+            <el-button size="small" type="primary">选择文件</el-button>
+            <div slot="tip" class="el-upload__tip">
+              <b>请先选择要上传的文档,再确认上传,上传文档!</b>
+            </div>
+          </el-upload>
+
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt>
+          </el-dialog>
+        </el-col>
+      </el-col>
+
+      <div class="buttom">
+        <el-button size="small" type="primary" @click="submitUpload">上传</el-button>
+        <el-button size="small" @click="download">下载</el-button>
+        <el-button size="small" type="danger" @click="deleteDialog = true">删除</el-button>
+      </div>
+    </el-row>
+
+    <el-dialog title="需要删除以下文档" :visible.sync="deleteDialog" width="80%">
+      <el-upload
+        :action="action"
+        :auto-upload="false"
+        :file-list="delShowDocList"
+        style="height: auto"
+      ></el-upload>
+
+      <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="dialogImageUrl" alt>
+      </el-dialog>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="delDocs(false)">取 消</el-button>
+        <el-button type="primary" @click="delDocs(true)">确定删除</el-button>
+      </span>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Document",
+  data() {
+    return {
+      deleteDialog: false,
+      dialogVisible: false,
+      uploadComplete: false, //上传完成的状态
+      dialogImageUrl: "",
+      params: {
+        productId: 0,
+        typeId: 1 //默认为第一个
+      },
+
+      fileType: "DOCUMENT",
+      action: this.HOST + "/productFile/saveFiles",
+      docTypeId: 1,
+      delShowDocList: [], //删除 文件展示列表
+      delDocList: [], //删除文档id列表
+      fileList: []
+    };
+  },
+  methods: {
+    init() {
+      console.log("doc init method");
+
+      this.buttonChecked("docType-1");
+      this.searchDocument(this.$store.state.product.productId, this.docTypeId);
+    },
+    searchDocument(productId, typeId) {
+      if (productId == null || productId == "") {
+        this.$message("请先选择产品");
+        return false;
+      }
+
+      //查询前先初始化
+      this.fileList = [];
+      this.delShowDocList = [];
+      this.delDocList = [];
+
+      var data = {
+        productId: productId,
+        typeId: typeId,
+        fileType: this.fileType
+      };
+
+      var url =
+        this.URL_ROOT +
+        this.URL_PREFIX +
+        "/productFile/findByProductIdAndTypeId";
+      this.$ajax({
+        method: "get",
+        url: url,
+        params: data
+      })
+        .then(res => {
+          if (res.data.code == "200") {
+            //渲染图片
+            console.log(res.data);
+            this.fileList = res.data.data;
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    uploadExceed(file, fileList) {
+      console.log("uploadExceed");
+      this.$message.warning(
+        `当前限制选择 10 个文件，本次选择了 ${
+          file.length
+        } 个文件，共选择了 ${file.length + fileList.length} 个文件`
+      );
+    },
+    handleRemove(file, fileList) {
+      console.log("移除文档");
+      console.log(file);
+      this.delDocList.push(file.productDocumentId);
+      var data = { url: file.url, name: file.name, id: file.productDocumentId };
+      this.delShowDocList.push(data);
+
+      console.log(this.delDocList);
+      console.log(this.delShowDocList);
+    },
+    handlePreview(file) {
+      console.log("图片预览");
+      console.log(file.url);
+      console.log(file.name);
+      /* this.dialogImageUrl = file.url;
+          this.dialogVisible = true;*/
+    },
+    uploadError(err, file, fileList) {
+      this.$message.error("上传出错,请重新上传" + err);
+    },
+    onSuccess: function(res, file, fileList) {
+      console.log("文档上传成功后，后台返回文档的路径");
+      console.log(res.data);
+      if (res.code == "200") {
+        this.$message(res.msg);
+        this.fileList = res.data;
+      }
+      this.uploadComplete = true;
+      // this.fileChange(fileList)
+    },
+    submitUpload() {
+      console.log("提交");
+      this.$refs.upload.submit();
+    },
+    beforeUploadPicture(file) {
+      console.log("上传图片前调用方法");
+      console.log(file);
+      this.params.productId = this.$store.state.product.productId;
+    },
+    chooseDocType(id) {
+      console.log(id);
+      this.buttonChecked(id);
+
+      //id 进行格式处理
+      var typeId = parseInt(id.toString().split("-")[1]);
+      console.log(typeId);
+
+      //每次改变类型进行赋值
+      this.params.typeId = typeId;
+      this.docTypeId = typeId;
+
+      this.searchDocument(this.$store.state.product.productId, this.docTypeId);
+    },
+    buttonChecked(id) {
+      $("#" + id)
+        .css("background-color", "#409efb")
+        .css("color", "#FFF");
+      $("#" + id)
+        .siblings()
+        .css("background-color", "#FFF")
+        .css("color", "#606266");
+    },
+    delDocs(flag) {
+      if (this.delDocList == null || this.delDocList.length == 0) {
+        this.$message.warning("请先选择需要删除的文档");
+        this.deleteDialog = false;
+        return false;
+      }
+
+      this.deleteDialog = true;
+
+      console.log(this.delShowDocList.toString());
+      console.log(this.delDocList.toString());
+      if (flag) {
+        //删除操作
+        var url = this.URL_ROOT + this.URL_PREFIX + "/productFile/dropFiles";
+        var data = {
+          fileIds: this.delDocList.toString(),
+          fileType: this.fileType
+        };
+
+        console.log("需要删除的文档 类型 ");
+        console.log(data.fileType);
+        this.$ajax({
+          method: "post",
+          url: url,
+          data: this.qs.stringify(data)
+        })
+          .then(res => {
+            if (res.data.code == "200") {
+              console.log(res.data.data);
+              //删除成功后返回 剩下的数据
+              this.fileList = res.data.data;
+              this.$message.success("删除成功");
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        //取消删除
+        this.searchDocument(
+          this.$store.state.product.productId,
+          this.imgTypeId
+        );
+      }
+      //清除删除list
+      this.delDocList = [];
+      this.delShowDocList = [];
+
+      this.deleteDialog = false;
+    },
+    download() {
+      console.log("download");
+      //包含上传的文件信息和服务端返回的所有信息都在这个对象里
+      console.log(this.$refs.upload.uploadFiles);
+
+      this.$confirm("确定下载？", "提示", {
+        confirmButtonText: "确定下载",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        this.downloadDocment();
+      });
+    },
+    downloadDocment() {
+      var ids = [];
+      var uploadFiles = this.$refs.upload.uploadFiles;
+
+      for (var index in uploadFiles) {
+        var id = uploadFiles[index].productDocumentId;
+        ids.push(id);
+      }
+
+      console.log(ids);
+
+      var url =
+        this.URL_ROOT + this.URL_PREFIX + "/productFileDownload/zipDownload";
+      this.$ajax
+        .get(url, {
+          params: {
+            ids: ids.toString(),
+            type: this.fileType
+          }
+        })
+        .then(res => {
+          if (res.status == 200) {
+            //下载
+            open(res.request.responseURL);
+
+            this.$message(res.data.data);
+          }
+        })
+        .catch(error => {
+          this.$message.error(error);
+        });
+    }
+  }
+};
+</script>
+
+<style lang="stylus">
+.Document-product-warp {
+  position relative
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+  .buttom{
+    position absolute
+    right 20px
+    bottom 20px;
+  }
+  .el-col .el-col-4{
+      min-width 170px;
+    }
+}
+</style>

@@ -1,0 +1,123 @@
+<template>
+
+  <div id="app">
+
+    <el-row :gutter="10">
+      <el-col :span="5">
+        <b>
+          <!--<el-input  style="width:144px; float: left; color:black" disabled >产品基础信息</el-input>-->
+          <!--<input value="产品基础信息" style="width:144px; float: left; color:black" disabled >-->
+          <span style="width:144px; float: left; ">产品基础信息</span>
+        </b>
+      </el-col>
+    </el-row>
+
+   <!-- <SearchBar ref="searchBar" @sendSearchResult="receiveSearchResult"></SearchBar>-->
+
+    <ProductForm ref="productForm" ></ProductForm>
+    <br>
+    <!--产品相关联信息操作-->
+    <Tabs ref="tabs" ></Tabs>
+  </div>
+
+</template>
+
+
+<!-- 引入element-ui js组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="//unpkg.com/vue/dist/vue.js"></script>
+<script src="//unpkg.com/element-ui@2.6.0/lib/index.js"></script>
+
+
+
+<script>
+
+  import SearchBar from "./product/SearchBar";
+  import ProductForm from "./product/ProductForm";
+  import Tabs from "./product/Tabs";
+
+  export default {
+  name: 'product',
+    components:{SearchBar,ProductForm,Tabs},
+
+  data () {
+    return {
+      border:true,
+      dialogImageUrl: '',
+      dialogVisible: false,
+      imageUrl:"",
+    }
+  },
+    methods: {
+    formatter(row, column) {
+      return row.date;
+    },
+    filterAge(value, row) {
+      /* 过滤年龄这列 值相等 过滤*/
+      return row.age === value;
+      // return row.age;
+    }
+    ,
+    beforeAvatarUpload(){
+
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(this.imageUrl)
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      /*if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }*/
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+
+  }
+}
+</script>
+
+<!-- 引入 element-ui 样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<style >
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+
+
+</style>
+

@@ -1,0 +1,715 @@
+<template>
+  <div >
+
+    <!--创建销售计划-->
+    <el-dialog
+      title="创建销售计划"
+      :visible.sync="dialogVisible"
+      width="20%"
+      :before-close="handleClose" >
+
+      <el-date-picker
+        v-model="salePlanTime"
+        type="month"
+        placeholder="选择日期">
+      </el-date-picker>
+
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="createSalePlan" size="mini">创 建</el-button>
+      </div>
+
+    </el-dialog>
+
+    <!--添加 备注-->
+    <el-dialog
+      title="提交反馈"
+      :visible.sync="remarkDialog"
+      width="20%"
+      :before-close="remarkDialogClose" >
+
+
+
+      <el-form :model="remarkForm"  label-width="100px" class="demo-dynamic" style="width: 80%">
+
+        <input v-model="remarkForm.salePlanItemId" hidden/>
+
+        <el-form-item label="反馈内容">
+          <el-input type="textarea"  :rows="2"  v-model="remarkForm.remark" controls-position="right"
+                    :step="1"  :max="10000"
+                    size="mini"></el-input>
+        </el-form-item>
+      </el-form>
+
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="addRemark" size="mini">添 加</el-button>
+      </div>
+
+    </el-dialog>
+
+    <form method="post" target="upload" action enctype="multipart/form-data">
+    <el-row style="padding: 0px 0px 6px">
+      <el-col :span="5">
+        <el-select v-model="salePlanId" clearable  placeholder="请选择销售计划" style="width: 220px" @change="chooseSalePlanId" size="mini">
+          <el-option v-for="salePlan in salePlanList" :key="salePlan.salePlanId" :value="salePlan.salePlanId" :label="salePlan.showSalePlan" ></el-option>
+        </el-select>
+      </el-col>
+
+      <el-col :span="4">
+        <el-button type="primary" @click="dialogVisible=true" size="mini">创建销售计划</el-button>
+      </el-col>
+    </el-row>
+
+    <el-row style="padding: 0px 0px 6px">
+      <el-col :span="5">
+        <download  :tHeader="tHeader" :tableData="tableData"  :excelName="excelName"  :filterVal="filterVal"></download>
+      </el-col>
+
+      <el-col :span="4">
+        <el-upload
+          ref="upload"
+          class="upload-demo"
+          name="uplaodSalePlanFile"
+          :action="uplaodSalePlanFileAction"
+          :data="params"
+          :on-preview="handlePreview"
+          :on-exceed="handleExceed"
+          :on-success="onSuccess"
+          :before-upload="beforeUpload"
+          :on-error="uploadError"
+          show-file-list="false"
+          >
+          <el-button  type="primary" size="mini">上传模块</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
+        </el-upload>
+      </el-col>
+    </el-row>
+    </form>
+
+
+    <el-table name="showTable" border="border" height="350px" style="width: 100%" :data="salePlanItemList"   @selection-change="selectionChangeId"  :show-summary="showSummary">
+      <el-table-column type="selection"   width="40" >  </el-table-column>
+
+      <el-table-column   label="国家" >
+        <template slot="header" slot-scope="scope" >
+          <el-select placeholder="请选择国家" clearable  filterable  multiple v-model="tableHeadCountryList" @change="chooseCountry"  size="mini" >
+            <el-option v-for="country in countryList"  :key="country.countryId" :value="country.countryId" :label="country.countryName"></el-option>
+          </el-select>
+        </template>
+
+        <template slot-scope="scope">
+          <span>{{scope.row.countryName}}</span>
+        </template>
+
+      </el-table-column>
+
+      <el-table-column  label="modelNumber"  >
+        <template slot="header" slot-scope="scope">
+          <el-select placeholder="请选择 modelNumber" clearable  filterable  multiple v-model="tableHeadModelNumberList" @change="chooseModelNumber"  size="mini">
+            <el-option v-for="product in productList"  :key="product.productId" :value="product.productId" :label="product.productModelNumber"></el-option>
+          </el-select>
+        </template>
+
+        <template slot-scope="scope">
+          <span>{{scope.row.productModelNumber}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column  prop="asin" label="ASIN" width="80px"></el-table-column>
+
+
+      <el-table-column  v-for="v in itemKeyList"  :key="v.itemKeyId" :label="v.itemKey+itemKeyNameLast"  v-if="v.type == 1" width="80px">
+        <template  slot-scope="scope">
+          <!-- {{scope.row.itemValVOList}}-->
+          <span v-for="item in scope.row.itemValVOList"  v-if="item.itemKeyId == v.itemKeyId"  >{{item.itemVal}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column  prop="lastUnitsAvgDay" label="加权历史日均" width="120px"></el-table-column>
+
+      <el-table-column  v-for="v in itemKeyList"  :key="v.itemKeyId" :label="v.itemKey+itemKeyNameEst" v-if="v.type == 2" width="80px">
+        <template  slot-scope="scope">
+          <span v-for="item in scope.row.itemValVOList" v-if="item.itemKeyId == v.itemKeyId" >{{item.itemVal}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column  prop="estUnitsAvgDay" label="加权后预测" width="110px"></el-table-column>
+      <el-table-column  prop="estUnitsPromotion" label="活动预测量" width="110px"></el-table-column>
+      <el-table-column  prop="rationality" label="合理性"  width="120px">
+        <template  slot-scope="scope">
+          <span v-if="scope.row.rationality > 0 ">合理</span>
+          <span v-if="scope.row.rationality < 0 ">不合理</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column   label="状态" width="180px">
+        <template slot="header" slot-scope="scope">
+          <el-select placeholder="请选择 状态" clearable  filterable  v-model="tableHeadStatus" @change="chooseStatus" size="mini">
+            <el-option v-for="obj in statusList" :key="obj.i" :value="obj.i" :label="obj.name"></el-option>
+          </el-select>
+        </template>
+
+        <template  slot-scope="scope">
+          <span v-for="obj in statusList"  v-if="scope.row.status == obj.i" :key="obj.i" >
+            {{obj.name}} &nbsp;
+            <span v-if="obj.i == 1 || obj.i == 4"> <el-button type="primary" size="mini" @click="updateStatus(scope.row.salePlanItemId,2)">提交</el-button>  </span>
+          </span>
+        </template>
+
+      </el-table-column>
+
+      <el-table-column  prop="remark" label="备注" width="120px">
+        <template  slot-scope="scope">
+          <div v-if="scope.row.remark != null && scope.row.remark != '' ">
+            <el-popover trigger="hover" placement="top" >
+              <p v-for="rowRemark in scope.row.showRemark">{{rowRemark}}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="mini">备注</el-tag>
+                <el-tag size="mini" v-if=" scope.row.salePlanItemId != null && scope.row.salePlanItemId != 0"
+                        @click="openRemarkDialog(scope.row)">添加备注</el-tag>
+              </div>
+            </el-popover>
+          </div>
+
+          <div v-if="scope.row.remark == null || scope.row.remark == '' ">
+            <span v-if=" scope.row.salePlanItemId != null && scope.row.salePlanItemId != 0 ">
+            <el-button type="primary" size="mini" @click="openRemarkDialog(scope.row)">添加备注</el-button>
+          </span>
+          </div>
+
+
+        </template>
+
+      </el-table-column>
+    </el-table>
+
+    <div>
+      <el-button type="primary" size="mini" @click="batchUpdateStatus(2)">批量提交</el-button>
+    </div>
+
+  </div>
+</template>
+
+<script>
+    export default {
+        name: "SalePlanSalesView",
+      components: {
+        download: resolve =>
+          require(["components/xlsx/download.vue"], resolve)
+      },
+      data(){
+          return{
+            showSummary:true,
+
+            //下载相关参数
+            tableData:[],
+            tHeader:[],
+            filterVal: [],
+            excelName:'销量计划模板',
+            statusList:[{i:1,name:"未提交"},{i:2,name:"待审核"},{i:3,name:"主管通过"},{i:4,name:"主管驳回"},{i:5,name:"采购接纳"},{i:6,name:"采购反馈"}],
+            dialogVisible:false,
+            itemKeyNameLast : '天历史日均',
+            itemKeyNameEst : '天预测日均',
+            salePlanTime:"",
+            salePlanId: 0,
+            salePlanList:[],
+            salePlanItemList:[],
+            countryList:[],
+            itemKeyList:[],
+            productList:[],
+            tableHeadModelNumberList:[],
+            tableHeadCountryList:[],
+            tableHeadStatus:"",
+            userId:this.$store.state.LoginedUser.userId,
+            //userId:1,
+
+            //上传相关参数
+            params:{userId:0,salePlanId:0},
+            uplaodSalePlanFileAction:this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/uplaodSalePlanFile",
+
+            //批量操作的id
+            batchUpdateStatuIdList:[],
+
+            //添加反馈
+            remarkDialog:false,
+            remarkForm:{salePlanItemId:0,remark:"",userId:0},
+
+          }
+      },
+
+      mounted() {
+          this.init()
+      },
+      methods:{
+          init(){
+            console.log(this.$store.state.LoginedUser)
+            this.initCountryList()
+            this.initProductList()
+            this.initItemKeyList()
+            this.initSalePlanList()
+          },
+          initSalePlanList(){
+            var userId = this.userId
+            console.log("initSalePlanList")
+            console.log(userId)
+            var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesViewHandler/findSalesPlanByUserId/" + userId
+
+            this.$ajax.get(url,{
+            }).then(res => {
+              if(res.data.code == "200"){
+                console.log(res.data.data)
+                this.salePlanList = res.data.data
+              }
+
+            }).catch(error => {
+              console.log(error)
+            })
+          },
+          initCountryList(){
+           var url = this.URL_ROOT + this.URL_PREFIX +"/findProductCharge/findCountry"
+            this.$ajax.get(url,{
+            }).then(res => {
+              if(res.data.code == "200"){
+                console.log(res.data.data)
+                this.countryList = res.data.data
+              }
+
+            }).catch(error => {
+              console.log(error)
+            })
+          },
+        initProductList(){
+          var url = this.URL_ROOT +  this.URL_PREFIX + "/findProduct/findAll"
+          this.$ajax.get(url,{
+
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log(res.data.data)
+              this.productList = res.data.data
+            }
+
+          }).catch(error => {
+            console.log(error)
+          })
+        },
+        initItemKeyList(){
+            console.log("initItemKeyList")
+
+          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesViewHandler/findItemKeyAll/" + this.userId
+          this.$ajax.get(url,{
+
+
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log(res.data.data)
+              this.itemKeyList = res.data.data
+            }
+
+          }).catch(error => {
+            console.log(error)
+          })
+        },
+        chooseCountry(){
+            console.log("chooseCountry")
+          this.search()
+        },
+        chooseModelNumber(){
+            console.log("chooseModelNumber")
+          this.search()
+        },
+        chooseStatus(){
+          console.log("chooseStatus")
+          this.search()
+        },
+        chooseSalePlanId(){
+           console.log("chooseSalePlanId")
+           console.log(this.salePlanId)
+           this.search();
+
+        },
+        handleClose(done){
+          this.$confirm('确认关闭？')
+            .then(_ => {
+              done();
+            })
+            .catch(_ => {});
+        },
+        checkParams(data){
+            var flag = true;
+            if(data.salePlanId == null || data.salePlanId == 0){
+              this.$message("请先选择销售计划")
+              flag = false;
+            }
+            return flag;
+        },
+        search(){
+            var data = {
+              salePlanId:this.salePlanId,
+              countryIdList:this.tableHeadCountryList,
+              productIdList:this.tableHeadModelNumberList,
+              status:this.tableHeadStatus,
+              userId:this.userId
+            };
+            if(!this.checkParams(data)){
+              return
+            }
+
+          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesViewHandler/findSalePlanItemList"
+          this.$ajax({
+            method: "post",
+            url: url,
+            data: data
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log(res.data.data)
+              this.salePlanItemList = res.data.data
+
+              this.createExportData(this.salePlanItemList)
+            }
+
+          }).catch(error => {
+            console.log(error)
+          })
+
+        },
+        createExportData(salePlanItemList){
+            if(salePlanItemList != null && salePlanItemList.length > 0){
+              var exportData = this.salePlanItemList
+
+              var itemKeyList = this.itemKeyList
+              /**
+               * 表头字段数组
+               * */
+              var headFiledArray = new Array()
+
+
+                /**
+                 * 获取不可变字段
+                 * */
+
+                var salePlanItem = salePlanItemList[0]
+                var array = Object.keys(salePlanItem);
+                // console.log("array = ")
+                // console.log(array)
+                for(var j = 0; j < array.length; j++){
+                  var name = array[j]
+                  if(name == "countryName"){
+                    var headFiledArray = array.slice(j,array.length-1)
+                    // console.log("headFiledArray = ")
+                    // console.log(headFiledArray )
+                    break
+                  }
+                }
+
+
+              console.log("headFiledArray = ")
+              console.log(headFiledArray )
+
+              /**
+               * 获取可变字段
+               * */
+
+              var salePlanItem = salePlanItemList[0]
+              console.log("length = "+ this.itemKeyList.length)
+              for(var k = 0; k < this.itemKeyList.length; k++){
+                var itemKeyObj = this.itemKeyList[k]
+                console.log("itemKeyObj" + k)
+                console.log(itemKeyObj)
+                  var type = itemKeyObj.type
+                  for(var j = 0; j < salePlanItem.itemValVOList.length; j++){
+                    var itemValObj = salePlanItem.itemValVOList[j]
+                    console.log("itemKeyObj" + k)
+                    console.log(itemKeyObj)
+                    //同一个 itemKeyId
+                    if(itemValObj.itemKeyId == itemKeyObj.itemKeyId){
+
+                      console.log("itemKeyObj.itemKey =" +itemKeyObj.itemKey)
+                      console.log("itemKeyNameLast ="  + this.itemKeyNameLast)
+
+                      if(type == 1){
+                        var index =  this.getLastUnitsAvgDayIndex(headFiledArray);
+                        //添加动态属性
+                        headFiledArray.splice(index,0,itemKeyObj.itemKey + this.itemKeyNameLast)
+                      }else if(type == 2){
+                        var index =  this.getEstUnitsAvgDayIndex(headFiledArray);
+                        //添加动态属性
+                        headFiledArray.splice(index,0,itemKeyObj.itemKey + this.itemKeyNameEst)
+                      }
+                      break
+                    }
+                  }
+              }
+
+
+              console.log("headFiledArray =2 ")
+              console.log(headFiledArray )
+
+              console.log("exportData =1 ")
+              console.log(exportData )
+
+              for(var i = 0; i < exportData.length; i++){
+                var salePlanItem = exportData[i]
+                var itemValList = salePlanItem.itemValVOList
+                console.log("itemValList")
+                console.log(itemValList)
+                if(itemValList != null && itemValList.length > 0){
+                  for(var j = 0; j < itemValList.length; j++){
+                    var itemValObj = itemValList[j]
+                    var value = itemValObj.itemVal;
+                    var type = itemValObj.type;
+                    console.log('itemVal =' + value)
+                    if(type == 1){
+                      console.log('type =' + type)
+                      //给salePlanItem添加属性 以及值
+                      var itemKey = itemValObj.itemKey + this.itemKeyNameLast
+                      salePlanItem[itemKey] = value
+                    }else if(type == 2){
+                      console.log('type =' + type)
+
+                      var itemKey = itemValObj.itemKey + this.itemKeyNameEst
+                      salePlanItem[itemKey] = value
+                    }
+
+                  }
+                }
+              }
+              console.log("exportData =2 ")
+              console.log(exportData )
+
+              this.tableData = exportData
+              this.tHeader = headFiledArray
+              this.filterVal = headFiledArray
+              this.excelName = "销售计划"
+             // }
+            }
+
+        },
+        getLastUnitsAvgDayIndex(headFiledArray){
+            if(headFiledArray != null && headFiledArray.length > 0){
+              for(var i = 0; i < headFiledArray.length; i++){
+                if(headFiledArray[i] == "lastUnitsAvgDay"){
+                  return i
+                  break
+                }
+              }
+            }
+          return 0
+
+        },
+        getEstUnitsAvgDayIndex(headFiledArray){
+          if(headFiledArray != null && headFiledArray.length > 0){
+            for(var i = 0; i < headFiledArray.length; i++){
+              if(headFiledArray[i] == "estUnitsAvgDay"){
+                return i
+                break
+              }
+            }
+          }
+          return 0
+
+        },
+        createSalePlan(){
+          var salePlanTime = this.salePlanTime;
+          console.log(salePlanTime)
+
+          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/addSalesPlan"
+
+            var data = {
+              userId:this.userId,
+              planDate:salePlanTime
+            }
+
+            this.$ajax({
+              method: "post",
+              url:url,
+              data:data
+            }).then(res => {
+              if(res.data.code == "200"){
+                console.log(res.data.data)
+                this.salePlanList = res.data.data
+                this.$message.success(res.data.msg)
+              }else if(res.data.code == "500"){
+                this.$message.error(res.data.msg)
+              }
+
+            }).catch(err => {
+              console.log(err)
+            })
+
+          //关闭
+          this.dialogVisible = false
+          this.clearSalePlanTime();
+
+        },
+        clearSalePlanTime(){
+            this.salePlanTime = ""
+        },
+        selectionChangeId(salePlanItemList){
+            console.log("selectionChangeId")
+            console.log(salePlanItemList)
+
+          //先初始化
+          this.batchUpdateStatuIdList = []
+
+          //保存选中的id
+          for(var i = 0; i < salePlanItemList.length; i++){
+            var salePlanItemId = salePlanItemList[i].salePlanItemId
+            var status = salePlanItemList[i].status
+
+            //符合条件的 未提交的和 主管驳回
+            if(status == 1 || status == 4){
+              this.batchUpdateStatuIdList.push(salePlanItemId)
+            }
+          }
+
+        },
+        handlePreview(file) {
+          console.log("handlePreview");
+          console.log(this.params);
+        },
+        handleExceed(files, fileList) {
+          this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+        },
+        onSuccess: function(res, file, fileList) {
+          console.log("文档上传成功后，后台返回文档的路径");
+          console.log(res);
+          if(res.code == 200){
+            this.$message.success(res.msg)
+            this.search()
+          }else if(res.code == 500){
+            this.$message.error(res.msg)
+          }
+          this.search()
+
+        },
+        uploadError(err, file, fileList) {
+          this.$message.error("上传出错,请重新上传" + err);
+        },
+        beforeUpload(){
+            console.log("beforeUpload")
+            console.log()
+          if(this.userId == null || this.userId == 0){
+            this.$message.error("不存在用户请重新登录！")
+            return
+          }
+          if(this.salePlanId == null || this.salePlanId == 0 || this.salePlanId == ""){
+            this.$message.error("请先选中销售计划")
+            return
+          }
+          this.params.userId = this.userId
+          this.params.salePlanId = this.salePlanId
+        },
+        updateStatus(id,status){
+
+            if(id == null || id == "" || id == 0){
+              this.$message.error("销售计划子项id不能为空")
+              return
+            }
+
+            var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/updateStatusBySalePlanItemId/" +id +"/" + status
+
+            this.$ajax.put(url,{}).then(res=>{
+              if(res.data.code == 200){
+                this.$message.success(res.data.msg)
+                //刷新
+                this.search()
+              }else if(res.data.code == 500){
+                this.$message.error(res.data.msg)
+              }
+
+            }).catch(err => {
+              console.log(err)
+            })
+
+        },
+        batchUpdateStatus(status){
+          console.log("批量提交")
+          console.log(status)
+
+          if(this.batchUpdateStatuIdList == null || this.batchUpdateStatuIdList.length == 0){
+            this.$message.error("请先选择销售计划!")
+            return
+          }
+          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/batchUpdateStatusBySalePlanItemIdList"
+          var data = {
+            status:status,
+            salePlanItemIdList:this.batchUpdateStatuIdList
+          }
+
+          this.$ajax({
+            method:'post',
+            url:url,
+            data:data
+          }).then(res=>{
+            if(res.data.code == 200){
+              this.$message.success(res.data.msg)
+              //刷新
+              this.search()
+            }else if(res.data.code == 500){
+              this.$message.error(res.data.msg)
+            }
+
+          }).catch(err => {
+            console.log(err)
+          })
+
+        },
+        clearRemarkForm(){
+          this.remarkForm = {salePlanItemId:0,remark:""}
+        },
+        remarkDialogClose(){
+        this.clearRemarkForm()
+          this.remarkDialog = false
+        },
+        openRemarkDialog(row){
+          //赋值,隐藏
+          this.remarkForm.salePlanItemId = row.salePlanItemId
+          this.remarkDialog = true;
+        },
+        addRemark(){
+          this.remarkForm.userId = this.userId
+          var data = this.remarkForm
+
+          if(data == null){
+            this.$message.error("提交数据为空,保存失败")
+            return
+          }
+          console.log("userId = " + data.userId + "--- salePlanItemId = " + data.salePlanItemId)
+          if(data.userId == 0 || data.salePlanItemId == 0 ){
+            this.$message.error("用户id为空,保存失败")
+            return
+          } if(data.salePlanItemId == null || data.salePlanItemId == 0 ){
+            this.$message.error("销售计划itemId为空,保存失败")
+            return
+          }
+
+          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesOperationsViewHandler/addRemark"
+          this.$ajax({
+            method:"post",
+            url:url,
+            data:data
+          }).then(res => {
+            if(res.data.code == 200){
+              this.$message.success(res.data.msg)
+              this.search()
+            }else if(res.data.code == 500){
+              this.$message.error(res.data.msg)
+            }
+          }).catch(err =>{
+            console.log(err)
+
+          })
+          this.clearRemarkForm()
+          this.remarkDialog = false
+
+
+        }
+
+      }
+    }
+</script>
+
+<style scoped>
+
+</style>

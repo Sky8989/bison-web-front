@@ -1,0 +1,70 @@
+<template>
+
+  <div>
+    <span>销售计划</span>
+    <el-tabs @tab-click="_handleClick">
+      <!--先判断当前用户是销售 主管 采购-->
+      <el-tab-pane label="销售视图" name="销售视图" >
+        <SalePlanSalesView ref="salePlanSalesView"></SalePlanSalesView>
+      </el-tab-pane>
+
+      <el-tab-pane label="主管视图" name="主管视图" >
+        <SalePlanSalesInChargeView ref="salePlanSalesInChargeView"></SalePlanSalesInChargeView>
+      </el-tab-pane>
+
+      <el-tab-pane label="采购视图" name="采购视图" >
+        <SalePlanOperationsView ref="salePlanOperationsView"></SalePlanOperationsView>
+      </el-tab-pane>
+    </el-tabs>
+
+
+
+  </div>
+
+</template>
+
+<script>
+    export default {
+        name: "SalePlan",
+
+      components: {
+        SalePlanSalesView: resolve =>
+          require(['../plan/opts/SalePlanSalesView.vue'], resolve),
+        SalePlanSalesInChargeView: resolve =>
+          require(['../plan/opts/SalePlanSalesInChargeView.vue'], resolve),
+        SalePlanOperationsView: resolve =>
+          require(['../plan/opts/SalePlanOperationsView.vue'], resolve),
+      },
+      data(){
+          return{
+
+          }
+      },
+      methods:{
+        _handleClick(tab, event) {
+          var tabName  = tab.name;
+          console.log(tabName)
+          if(tabName == '销售视图'){
+            console.log("销售视图")
+        //   this.$refs.salePlanSalesView.init()
+          }
+          else if(tabName == "主管视图"){
+            console.log("主管视图")
+           this.$refs.salePlanSalesInChargeView.init()
+
+          }
+          else if(tabName == "采购视图"){
+            console.log("采购视图")
+           this.$refs.salePlanOperationsView.init()
+          }
+
+
+        },
+      }
+
+    }
+</script>
+
+<style scoped>
+
+</style>

@@ -1,0 +1,134 @@
+<template>
+  <div>
+    <el-table :data="personnelList">
+      <el-table-column prop="userName" label="账号" width="120"></el-table-column>
+      <el-table-column prop="userDisplayName" label="姓名" width="120"></el-table-column>
+      <el-table-column prop="departmentName" label="部门" width="120"></el-table-column>
+      <el-table-column prop="roleName" label="职位" width="120"></el-table-column>
+      <el-table-column prop="departmentParentName" label="直属部门" width="320">
+        <template
+          slot-scope="scope"
+        >{{scope.row.departmentParentName.substring(0,scope.row.departmentParentName.length-1)}}</template>
+      </el-table-column>
+      <el-table-column prop="name" label="操作" align="left">
+        <template slot-scope="scope" v-if="departmentId != scope.row.departmentId">
+          <el-button type="text" size="small" icon="el-icon-news" @click="_setPermission(scope.row)" title="权限"></el-button>
+          <el-button type="text" size="small" icon="el-icon-edit" @click="_editPersonnel(scope.row)" title="编辑"></el-button>
+          <el-button type="text" size="small" icon="el-icon-delete" @click="_deletebutton(scope.row)" title="删除"></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <permissionDialog
+            ref="theUserPermission"
+            :theUserId="theUserId"
+            :theUserName="theUserName"
+    ></permissionDialog>
+  </div>
+</template>
+<script>
+const ERR_OK = 200;
+
+export default {
+  props: ["groupId", "departmentItem"],
+  data() {
+    return {
+      personnelList: [],
+      departmentId: "",
+      theUserId:0,
+      theUserName:'',
+    };
+  },
+  activated() {
+    this.personnel();
+  },
+  created() {
+    this.personnel();
+  },
+  methods: {
+    // 获取下属
+    personnel() {
+      let _url = "";
+      this.departmentId = this.$store.state.LoginedUser.departmentId;
+      if (this.departmentItem.id == 0 || !this.departmentItem.id) {
+        _url =
+          "/login-service/getDepartmentUser/" +
+          this.$store.state.LoginedUser.userId +
+          "/"+this.$store.state.LoginedUser.departmentId;
+      } else {
+        _url =
+          "/login-service/getDepartmentUser/getDirectUser/" +
+          this.$store.state.LoginedUser.userId +
+          "/" +
+          this.groupId;
+      }
+      let listData = [];
+      let booleans = false;
+      this.$ajax.get(this.URL_ROOT + _url).then(res => {
+        if (res.data.code == ERR_OK) {
+          listData = res.data.data;
+          for (let i in listData) {
+            if (!listData[i].departmentParentName) {
+              listData[i].departmentParentName = this.departmentItem.parentPath;
+            }
+          }
+          this.personnelList = listData;
+          if (this.personnelList.length > 0) {
+            booleans = false;
+          } else {
+            booleans = true;
+          }
+          this.$emit("deleteGroup", booleans);
+        }
+      });
+    },
+    // 编辑人员
+    _editPersonnel(val) {
+
+      this.$emit("success", val);
+    },
+    // 删除人员
+    _deletebutton(val) {
+      this.$confirm("此操作将永久删除该人员, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$ajax
+            .delete(this.URL_ROOT + "/login-service/users/+" + val.userId)
+            .then(res => {
+              if (res.data.code == ERR_OK) {
+                this.$message({
+                  type: "success",
+                  message: "删除成功!"
+                });
+                this.personnel();
+              }
+            });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    _setPermission(the_row){
+      this.theUserId = the_row.userId;
+      this.theUserName = the_row.departmentName + "/" + the_row.roleName +":" + the_row.userName;
+      this.$refs.theUserPermission._show();
+      this.$refs.theUserPermission.getUserPermission();
+
+    },
+  },
+  components:{
+    permissionDialog:resolve =>
+            require(["components/department/opts/permissionDialog.vue"], resolve)
+  },
+  watch: {
+    groupId() {
+      this.personnel();
+    }
+  }
+};
+</script>

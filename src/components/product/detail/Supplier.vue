@@ -1,0 +1,321 @@
+<template>
+    <div id="Supplier">
+     <el-row>
+       <el-col :span="4">
+         <el-button style="float: left" @click="addSupplier = true">新增供应商+</el-button>
+       </el-col>
+     </el-row>
+
+      <el-dialog title="新增/编辑供应商+" :visible.sync="addSupplier" style="width: auto; height: auto;" @closed="closeDialog">
+
+        <el-form label-width="90px" :model="form" :label-position="LabelPosition">
+
+          <input type="number" hidden v-model="form.supplierId"/>
+
+          <el-row >
+            <el-col :span="5">
+              <el-form-item label="供应商:">
+                <el-input v-model="form.supplierName"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="联系人:">
+                <el-input v-model="form.contact"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="联系电话:">
+                <el-input v-model="form.contactPhone"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="联系邮箱:">
+                <el-input v-model="form.contactMail"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="20">
+              <el-form-item label="地址:">
+                <el-input v-model="form.address"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+
+          <el-row >
+            <el-col :span="5">
+              <el-form-item label="采购成本:">
+                <el-input v-model="form.productionCosts"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="MOQ:">
+                <el-input v-model="form.MOQ"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="产能:">
+                <el-input v-model="form.capactity"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row >
+            <el-col :span="5">
+              <el-form-item label="交易货币:">
+               <!-- <el-input v-model="form.transactionCurrency"></el-input>-->
+                <el-select v-model="form.transactionCurrency" placeholder="请选择交易货币">
+                  <el-option label="RMB" value="RMB"></el-option>
+                  <el-option label="JPY" value="JPY"></el-option>
+                  <el-option label="EUR" value="JPY"></el-option>
+                  <el-option label="GBP" value="GBP"></el-option>
+                  <el-option label="USD" value="USD"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="最小包:">
+                <el-input v-model="form.minCartonQuantity"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="采购负责人:">
+               <!-- <el-input v-model="form.principalUser"></el-input>-->
+                <el-select v-model="form.principalUser" placeholder="请选择采购负责人">
+                  <el-option label="aaa" value="1"></el-option>
+                  <el-option label="bbb" value="2"></el-option>
+                  <el-option label="ccc" value="3"></el-option>
+                  <el-option label="ddd" value="4"></el-option>
+                  <el-option label="fff" value="5"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="20">
+              <el-form-item label="备注:">
+                <el-input v-model="form.remark" type="textarea" :autosize="{minRows:4,maxRows:6}"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addSupplier = false">取 消</el-button>
+          <el-button type="primary" @click="submitSupplier">确 定</el-button>
+        </div>
+
+      </el-dialog>
+
+      <!--使用element-ul <el-table> 自带的 row-click事件 	当某一行被点击时会触发该事件 默认参数(row, column, event)-->
+      <el-table  :data="supplierList" height="250px" border="border" @cell-click="editSupplier"  >
+        <el-table-column prop="productSupplierId" label="id"> </el-table-column>
+        <el-table-column prop="productSupplierName" label="供应商" ></el-table-column>
+        <el-table-column prop="productSupplierAddress" label="地址" ></el-table-column>
+        <el-table-column prop="productSupplierContact" label="联系人" ></el-table-column>
+        <el-table-column prop="productSupplierContactPhone" label="联系电话" ></el-table-column>
+        <el-table-column prop="productSupplierContactMail" label="联系邮箱" ></el-table-column>
+        <el-table-column prop="productSupplierProductionCosts" label="采购成本" ></el-table-column>
+        <el-table-column prop="productSupplierMoq" label="MOQ" ></el-table-column>
+        <el-table-column prop="productSupplierCapactity" label="产能" ></el-table-column>
+        <el-table-column prop="productSupplierMinimumCartonQuantity" label="最小包" ></el-table-column>
+        <el-table-column prop="productSupplierTransactionCurrency" label="交易货币" ></el-table-column>
+        <el-table-column prop="userId" label="采购负责人" ></el-table-column>
+        <el-table-column prop="productSupplierRecordUser" label="记录人" ></el-table-column>
+        <el-table-column prop="uTime" label="更新时间" ></el-table-column>
+        <el-table-column prop="remark" label="备注" ></el-table-column>
+        <el-table-column prop="edit" label="编辑"   ><el-button  @click="addSupplier = true" >编辑</el-button></el-table-column>
+
+      </el-table>
+
+
+
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "Supplier",
+      // inject: ['reload'],
+
+      data(){
+          return {
+            addSupplier:false,//控制添加弹出框
+            supplierList:[
+             /* {supplier:'供应商A',address:'广东省深圳市',contact:'jack',contactPhone:'123456789',contactMail:'xxxxx@xx.com',productionCosts:'1000',MOQ:'1000',capactity:'1000',minCartonQuantity:'10',transactionCurrency:'RMB',principalUser:'xxx',recordUser:'xxx',uTime:'2019-3-12',remake:'备注'},
+        */
+            ],
+            form: {
+              supplierId:0,
+              supplierName:'',
+              address:'',
+              contact:'',
+              contactPhone:'',
+              contactMail:'',
+              productionCosts:'',
+              MOQ:'',
+              capactity:'',
+              minCartonQuantity:'',
+              transactionCurrency:'',
+              principalUser:'',
+              recordUser:'',
+              uTime:'',
+              remark:''
+            },
+            LabelPosition: 'right'
+          }
+
+      },
+      methods:{
+          init(){
+            this.searchSupplier(this.$store.state.product.productId)
+          },
+        submitSupplier(){
+
+          var supplierId =  this.form.supplierId
+          var method = "post";
+          var url = this.URL_ROOT + this.URL_PREFIX
+          if(supplierId != null   && supplierId != 0 ){
+            console.log("put")
+            url += "/productSupplier/update/" + supplierId
+            // method = "put"
+            console.log(supplierId)
+          }else{
+            console.log("post")
+            url += "/productSupplier/add"
+            // method = "post"
+          }
+
+          console.log(url)
+
+          var data = {
+            productSupplierId: supplierId,
+            productSupplierName: this.form.supplierName ,
+            productSupplierAddress: this.form.address ,
+            productSupplierContact: this.form.contact ,
+            productSupplierContactPhone: this.form.contactPhone ,
+            productSupplierContactMail: this.form.contactMail ,
+            productSupplierTransactionCurrency: this.form.transactionCurrency ,
+            userId: this.form.principalUser ,
+            productSupplierRecordUser: "当前用户",
+            remark: this.form.remark ,
+            productId: this.$store.state.product.productId,
+            productSupplierProductionCosts: this.form.productionCosts ,
+            productSupplierMoq: this.form.MOQ ,
+            productSupplierCapactity: this.form.capactity ,
+            productSupplierMinimumCartonQuantity: this.form.minCartonQuantity }
+
+
+          // console.log("添加供应商")
+
+          this.$ajax({
+            method:"post",
+            url: url,
+            data: data
+          }).then(res => {
+            if(res.data.code == "200"){
+
+              if(supplierId != null   && supplierId != 0 ){
+                this.$message("修改供应商信息成功")
+              }else {
+                this.$message("新增供应商信息成功")
+
+              }
+              this.supplierList = res.data.data
+
+            }
+
+          }).catch(error => {
+            this.$message(error)
+          })
+
+          this.form = {}
+          this.addSupplier = false
+        },
+        searchSupplier(productId){
+          console.log("===searchSupplier")
+
+
+          if(productId == null || productId == ''){
+            this.$message("请先选择产品")
+            return false
+          }
+
+          console.log(productId)
+          var url = this.URL_ROOT + this.URL_PREFIX +"/productSupplier/findProductSupplier/" + productId
+
+          this.$ajax.post(url,{
+
+          }).then(res => {
+            if(res.data.code == "200"){
+              console.log(res.data.data)
+              // console.log(JSON.parse(res.data.data).getValue(1))
+              this.supplierList =  res.data.data;
+
+
+            }
+          }).catch(error => {
+            this.$message(error)
+          })
+
+        },
+        editSupplier(row,cell){
+          //显示
+          //this.addSupplier = true
+          console.log(cell.label)
+          //只有点击编辑这一列时才能修改
+          if(cell.label != "编辑"){
+            return false;
+          }
+
+           //赋值给需要编辑的表单
+           this.form.supplierId = row.productSupplierId
+           this.form.supplierName = row.productSupplierName
+           this.form.address = row.productSupplierAddress
+           this.form.contact = row.productSupplierContact
+           this.form.contactPhone = row.productSupplierContactPhone
+           this.form.contactMail = row.productSupplierContactMail
+           this.form.transactionCurrency = row.productSupplierTransactionCurrency
+           this.form.principalUser = row.userId
+           this.form.remark = row.remark
+           this.form.productionCosts = row.productSupplierProductionCosts
+           this.form.MOQ = row.productSupplierMoq
+           this.form.capactity = row.productSupplierCapactity
+           this.form.minCartonQuantity = row.productSupplierMinimumCartonQuantity
+
+
+
+          /*console.log(column)*/
+
+        },
+        closeDialog(){
+        console.log("closeDialog 关闭回调")
+        this.form = {
+          supplierId:0,
+          supplierName:'',
+          address:'',
+          contact:'',
+          contactPhone:'',
+          contactMail:'',
+          productionCosts:'',
+          MOQ:'',
+          capactity:'',
+          minCartonQuantity:'',
+          transactionCurrency:'',
+          principalUser:'',
+          recordUser:'',
+          uTime:'',
+          remark:''
+        }
+      }
+
+      }
+    }
+</script>
+
+<style scoped>
+
+</style>
