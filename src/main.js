@@ -24,6 +24,7 @@ Vue.prototype.$ajax = axios
 Vue.prototype.URL_ROOT = "http://192.168.1.220:10122"
 Vue.prototype.URL_PREFIX = "/product-service"
 Vue.prototype.PREFIX_INVENTORY = "/sales-plan"
+Vue.prototype.HOST = "/api"
 Vue.prototype.$ = $
 Vue.prototype.qs = qs
 

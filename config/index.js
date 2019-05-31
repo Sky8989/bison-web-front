@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       "/api": {
         //注意：代理端口如果和后端端口 不用会出现 504 (Gateway Timeout)
-        target: "http://192.168.1.102:10022",
+        target: "http://192.168.1.55:10023",
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

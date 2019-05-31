@@ -11,7 +11,7 @@
         </el-tab-pane>
 
         <el-tab-pane label="SKU汇总" name="SKU汇总" >
-          <SellerView ref="sellerView"></SellerView>
+          <SkuView ref="skuView"></SkuView>
         </el-tab-pane>
 
 
@@ -43,6 +43,12 @@
          if(tabName == "产品型号汇总"){
             this.$refs.modelNumberView.init()
           }
+          else if(tabName == "账号汇总"){
+            this.$refs.sellerView.init()
+          }
+         else if(tabName == "SKU汇总"){
+           this.$refs.skuView.init()
+         }
 
         }
       }
