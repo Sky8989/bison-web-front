@@ -138,7 +138,7 @@ export default {
         this.findDataSave.userId = this.$store.state.LoginedUser.userId
       this.$ajax({
           method: "post",
-          url:'http://192.168.1.179:10030/userDataColumn/findData/' + this.$store.state.LoginedUser.userId,
+          url:this.URL_ROOT+this.CODINGINFORMATIONMANAGEMENT_SERVICE+'/userDataColumn/findData/' + this.$store.state.LoginedUser.userId,
           data: this.findDataSave
       }).then(res => {
           if(res.data.code === ERR_OK){

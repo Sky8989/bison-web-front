@@ -107,7 +107,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .Tabs-product-warp{
     .el-button{
       margin-bottom 10px;

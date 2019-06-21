@@ -31,13 +31,19 @@
       methods:{
           init(){
             this.input.userId = ""
+            this.show.userId = ""
             this.inputUserList = [],
             this.showUserList = [],
             this.getDeptUserAll()
           },
+        initInputSelectAndShowInput(){
+            this.input.userId = ""
+            this.show.userId = ""
+
+          },
         getDeptUserAll(){
             console.log("user = " + this.user)
-          var url =  "http://192.168.1.224:10025/getDepartmentUser/" + this.user.userId +"/" + this.user.departmentId
+          var url =  this.URL_ROOT + "/login-service/getDepartmentUser/" + this.user.userId +"/" + this.user.departmentId
           this.$ajax.get(url,{
           }).then(res => {
             if(res.data.code == "200"){
@@ -75,7 +81,7 @@
         },
         chooseUserSearch(){
             console.log("chooseModelNumberSearch")
-          console.log(this.show.userId)
+            console.log(this.show.userId)
           this.$emit("sendUserIds", this.show.userId);
 
         }

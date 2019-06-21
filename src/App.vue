@@ -23,7 +23,7 @@ export default {
   beforeUpdate: function() {},
   components: {
     "v-header": resolve => require(["components/header/header.vue"], resolve),
-    "breadcrumb": resolve => require(["components/breadcrumb/breadcrumb.vue"], resolve)
+    "breadcrumb": resolve => require(["components/common/breadcrumb.vue"], resolve)
   }
 };
 </script>

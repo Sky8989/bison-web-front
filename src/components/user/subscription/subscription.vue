@@ -44,16 +44,16 @@
         position relative
         .leftlist{
             position relative
-            width 150px;
+            width 200px;
             float left
-            border 1px solid #eeeeee
+            border 1px solid #ebeef5
             z-index 9
             ul{
                 li{
                     padding 12px
                     font-size 14px
                     color #333
-                    border-bottom 1px solid #eeeeee
+                    border-bottom 1px solid #ebeef5
                     &:last-child {
                         border-bottom none
                     }
@@ -67,17 +67,18 @@
                 }
             }
             .title{
-                font-size 14px
-                padding 12px
+                font-size 16px
+                padding 15px
                 font-weight:bold
-                border-bottom 1px solid #eeeeee
+                border-bottom: 1px solid #ebeef5;
+                background: #ebeef5;
             }
         }
         .mgsubscription-content{
             position absolute
             top 0
             right 0
-            left 190px
+            left 220px
         }
     }
 </style>

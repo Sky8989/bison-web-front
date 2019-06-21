@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       "/api": {
         //注意：代理端口如果和后端端口 不用会出现 504 (Gateway Timeout)
-        target: "http://192.168.1.55:10023",
+        target: "http://192.168.1.55:10025",
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -22,6 +22,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
+    //host: '0.0.0.0', // can be overwritten by process.env.HOST
     host: '127.0.0.1', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,

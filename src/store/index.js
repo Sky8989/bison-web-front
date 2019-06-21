@@ -13,7 +13,8 @@ export default new Vuex.Store({
       countryId: [], 
       productCategoryId: [],
       productId: []
-    }
+    },
+    businessReportDataCloumnSetting:[]
   },
   mutations: {
     // 改变状态的方法也需要2个，一个是登录或注册了，一个是登出了
@@ -40,9 +41,12 @@ export default new Vuex.Store({
       // console.log("---setProduct")
       state.product = data
     },
-    // 业绩报告
+    // 销售报告
     businessReport(state, data){
       state.businessReportData = data
+    },
+    _businessReportDataCloumnSetting(state, data){
+      state.businessReportDataCloumnSetting = data
     }
   },
   getters: {

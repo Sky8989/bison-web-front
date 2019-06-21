@@ -28,8 +28,6 @@
       width="20%"
       :before-close="remarkDialogClose" >
 
-
-
       <el-form :model="remarkForm"  label-width="100px" class="demo-dynamic" style="width: 80%">
 
         <input v-model="remarkForm.salePlanItemId" hidden/>
@@ -220,7 +218,7 @@
         name: "SalePlanSalesView",
       components: {
         download: resolve =>
-          require(["components/xlsx/download.vue"], resolve)
+          require(["components/common/download-xlsx.vue"], resolve)
       },
       data(){
           return{
@@ -253,7 +251,7 @@
 
             //上传相关参数
             params:{userId:0,salePlanId:0},
-            uplaodSalePlanFileAction:this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/uplaodSalePlanFile",
+            uplaodSalePlanFileAction:this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesViewHandler/uplaodSalePlanFile",
 
             //批量操作的id
             batchUpdateStatuIdList:[],
@@ -286,7 +284,7 @@
             var userId = this.userId
            // console.log"initSalePlanList")
            // console.loguserId)
-            var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesViewHandler/findSalesPlanByUserId/" + userId
+            var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/salesPalnSalesViewHandler/findSalesPlanByUserId/" + userId
 
             this.$ajax.get(url,{
             }).then(res => {
@@ -329,7 +327,7 @@
         initItemKeyList(){
            // console.log"initItemKeyList")
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesViewHandler/findItemKeyAll/" + this.userId
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/salesPalnSalesViewHandler/findItemKeyAll/" + this.userId
           this.$ajax.get(url,{
 
 
@@ -395,7 +393,7 @@
               return
             }
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesViewHandler/findSalePlanItemList"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/salesPalnSalesViewHandler/findSalePlanItemList"
           this.$ajax({
             method: "post",
             url: url,
@@ -619,7 +617,7 @@
           var salePlanTime = this.salePlanTime;
          // console.logsalePlanTime)
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/addSalesPlan"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesViewHandler/addSalesPlan"
 
             var data = {
               userId:this.userId,
@@ -713,7 +711,7 @@
               return
             }
 
-            var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/updateStatusBySalePlanItemId/" +id +"/" + status
+            var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesViewHandler/updateStatusBySalePlanItemId/" +id +"/" + status
 
             this.$ajax.put(url,{}).then(res=>{
               if(res.data.code == 200){
@@ -737,7 +735,7 @@
             this.$message.error("请先选择销售计划!")
             return
           }
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/batchUpdateStatusBySalePlanItemIdList"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesViewHandler/batchUpdateStatusBySalePlanItemIdList"
           var data = {
             status:status,
             salePlanItemIdList:this.batchUpdateStatuIdList
@@ -790,7 +788,7 @@
             return
           }
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesOperationsViewHandler/addRemark"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesOperationsViewHandler/addRemark"
           this.$ajax({
             method:"post",
             url:url,
@@ -878,7 +876,7 @@
             return
           }
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/itemKeyHandler/batchItemValue"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/itemKeyHandler/batchItemValue"
           var data = {
             itemValIdAndItemValList:itemValIdAndItemValList
           }

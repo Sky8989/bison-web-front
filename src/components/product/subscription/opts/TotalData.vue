@@ -103,7 +103,7 @@
     name: "totalData",
     components: {
       download: resolve =>
-        require(["components/xlsx/download.vue"], resolve)
+        require(["components/common/download-xlsx.vue"], resolve)
     },
     data(){
       return{

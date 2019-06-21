@@ -184,7 +184,7 @@
         name: "SalePSalePlanSalesInChargeViewTable",
       components: {
         download: resolve =>
-          require(["components/xlsx/download.vue"], resolve)
+          require(["components/common/download-xlsx.vue"], resolve)
       },
       data(){
           return{
@@ -240,8 +240,8 @@
         },
         initUserList(){
          // console.log"initUserList")
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesChargeViewHandler/findUserList/"+ this.userId
-          // var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/productCoded/findCountryList"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/salesPalnSalesChargeViewHandler/findUserList/"+ this.userId
+          // var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/productCoded/findCountryList"
           this.$ajax.get(url,{
           }).then(res => {
             if(res.data.code == "200"){
@@ -264,7 +264,7 @@
         },
         searchSalePlanItemList(){
          // console.log"initSalePlanItemList")
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesChargeViewHandler/findSalePlanItemList"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/salesPalnSalesChargeViewHandler/findSalePlanItemList"
 
 
           var startTime = ""
@@ -331,8 +331,8 @@
         initItemKeyList(){
          // console.log"initItemKeyList")
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesViewHandler/findItemKeyAll/" + this.userId
-          // var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/productCoded/findCountryList"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/salesPalnSalesViewHandler/findItemKeyAll/" + this.userId
+          // var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/productCoded/findCountryList"
           this.$ajax.get(url,{
 
 
@@ -593,7 +593,7 @@
             return
           }
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/updateStatusBySalePlanItemId/" +id +"/" + status
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesViewHandler/updateStatusBySalePlanItemId/" +id +"/" + status
 
           this.$ajax.put(url,{}).then(res=>{
             if(res.data.code == 200){
@@ -616,7 +616,7 @@
             this.$message.error("请先选择销售计划!")
             return
           }
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/batchUpdateStatusBySalePlanItemIdList"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesViewHandler/batchUpdateStatusBySalePlanItemIdList"
           var data = {
             status:status,
             salePlanItemIdList:this.batchUpdateStatuIdList
@@ -664,7 +664,7 @@
             return
           }
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesOperationsViewHandler/addRemark"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesOperationsViewHandler/addRemark"
           this.$ajax({
             method:"post",
             url:url,

@@ -219,7 +219,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .SearchBar-product-warp{
     .el-row{
       padding-bottom 15px; 

@@ -25,7 +25,8 @@ export default {
       formedit: {
         departmentName: "",
         parentId: "",
-        isBu: false
+        isBu: false,
+        businessUnitId:0,
       },
       rules: {
         departmentName: [
@@ -41,6 +42,8 @@ export default {
         // 获取parentId
         this.formedit.parentId = this.departmentItem.id;
         this.formedit.isBu = false;
+        this.formedit.businessUnitId = this.departmentItem.businessUnitId;
+        debugger;
       }
     },
     _addDepartment(formName) {

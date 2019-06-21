@@ -2,11 +2,11 @@
   <div>
     <el-container class="businessReport-warp">
       <el-header height="auto">
-        <headSearchfor @submitForm="submitForm"></headSearchfor>
+        <headSearchfor @submitForm="submitForm" @upDataCloumnSetting="upDataCloumnSetting"></headSearchfor>
         <headAccount></headAccount>
       </el-header>
     </el-container> 
-     <dailyDetails ref="dailyDls" ></dailyDetails>
+     <dailyDetails ref="dailyDls"></dailyDetails>
   </div> 
 </template>
 <script>
@@ -16,7 +16,10 @@ export default {
     // 按天周月查询数据
     submitForm() {
       this.$refs.dailyDls.businessReports();
-    } 
+    } ,
+    upDataCloumnSetting(){
+      this.$refs.dailyDls._dataCloumn();
+    }
   }, 
   components: {
     headSearchfor: resolve =>

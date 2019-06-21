@@ -274,8 +274,8 @@
         initItemKeyList(){
           // console.log"initItemKeyList")
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesChargeViewHandler/findItemKeyAll"
-          // var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/productCoded/findCountryList"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/salesPalnSalesChargeViewHandler/findItemKeyAll"
+          // var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/productCoded/findCountryList"
           this.$ajax.get(url,{
 
 
@@ -437,7 +437,7 @@
           // console.log"data")
           // console.logdata)
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesVolumeRuleHandler/addSalesVolumeRule"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesVolumeRuleHandler/addSalesVolumeRule"
 
           // console.log"addSalesVolumeRule")
 
@@ -468,7 +468,7 @@
           }else {
             //新增操作
             //数据判断需要处理
-            var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesChargeViewHandler/addSalesVolumeRule"
+            var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesChargeViewHandler/addSalesVolumeRule"
 
 
             var ratioStr = ''
@@ -551,7 +551,7 @@
             return
           }
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/itemKeyHandler/updateItemKey"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/itemKeyHandler/updateItemKey"
 
           var data = {
             type:type,
@@ -643,7 +643,7 @@
               // console.log"删除自定义列 ==")
 
               //禁用
-              var  url = this.URL_ROOT + this.PREFIX_INVENTORY + "/itemKeyHandler/updateItemKeyStatus/"+itemKeyId+"/"+status
+              var  url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/itemKeyHandler/updateItemKeyStatus/"+itemKeyId+"/"+status
 
               this.$ajax.get(url)
                 .then(res => {
@@ -937,7 +937,7 @@
 
           }
 
-        var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesChargeViewHandler/updateRowSalesVolumeRule"
+        var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesChargeViewHandler/updateRowSalesVolumeRule"
 
           this.$ajax({
             method: 'post',
@@ -992,7 +992,7 @@
               // console.log"deleteSalesVolumeRuleItemKeyRelList")
               // console.logthis.deleteSalesVolumeRuleItemKeyRelList)
 
-              var url =  this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesChargeViewHandler/deleteRowSalesVolumeRule/" + row.salesVolumeRuleId
+              var url =  this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesChargeViewHandler/deleteRowSalesVolumeRule/" + row.salesVolumeRuleId
 
               this.$ajax.delete(url).then(res => {
                 var data = res.data
@@ -1041,7 +1041,7 @@
           //1:先查询数据库是否存在数据
 
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesChargeViewHandler/getAllSalesVolumeRuleByUserId/"+this.userId
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesChargeViewHandler/getAllSalesVolumeRuleByUserId/"+this.userId
 
           this.$ajax.get(url).then(res => {
             if(res.data.code == "200"){
@@ -1076,7 +1076,7 @@
           // console.log"data = ")
           // console.logdata)
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/itemKeyHandler/addItemKey"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/itemKeyHandler/addItemKey"
 
           this.$ajax({
             method:"post",

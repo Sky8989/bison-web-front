@@ -226,7 +226,9 @@ export default {
       this.arrData.productCategory = [];
       this.$ajax
         .get(
-          "http://192.168.1.179:10028/search/findProductsByBu?businessUnitId=" +
+          this.URL_ROOT +
+            this.BUSINESSREPORT_SERVICE +
+            "/search/findProductsByBu?businessUnitId=" +
             this.ruleForm.businessUnitId.join(",")
         )
         .then(res => {
@@ -241,7 +243,9 @@ export default {
       this.ruleForm.productCategoryId = [];
       this.$ajax
         .get(
-          "http://192.168.1.179:10028/search/findProductsByBuAndCountry?businessUnitId=" +
+          this.URL_ROOT +
+            this.BUSINESSREPORT_SERVICE +
+            "/search/findProductsByBuAndCountry?businessUnitId=" +
             this.ruleForm.businessUnitId.join(",") +
             "&countryId=" +
             this.ruleForm.countryId.join(",")
@@ -262,7 +266,9 @@ export default {
       this.ruleForm.productId = [];
       this.$ajax
         .get(
-          "http://192.168.1.179:10028/search/findProductsByBuAndCountryAndCategory?businessUnitId=" +
+          this.URL_ROOT +
+            this.BUSINESSREPORT_SERVICE +
+            "/search/findProductsByBuAndCountryAndCategory?businessUnitId=" +
             this.ruleForm.businessUnitId.join(",") +
             "&countryId=" +
             this.ruleForm.countryId.join(",") +
@@ -355,7 +361,10 @@ export default {
           }
           this.$ajax({
             method: "post",
-            url: "http://192.168.1.179:10028/businessDownload/downloadByDay",
+            url:
+              this.URL_ROOT +
+              this.BUSINESSREPORT_SERVICE +
+              "/businessDownload/downloadByDay",
             data: $.extend(this.ruleForm, data)
           }).then(res => {
             if (res.data.code === ERR_OK) {

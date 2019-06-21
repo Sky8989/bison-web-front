@@ -54,7 +54,10 @@
           @change="_findProductsByBuAndCountryAndCategory"
         >
           <div class="businessReport-customize-select-btn-group">
-            <el-button size="mini" @click="selectAll(arrData.productCategory,'productCategoryId')">全部选中</el-button>
+            <el-button
+              size="mini"
+              @click="selectAll(arrData.productCategory,'productCategoryId')"
+            >全部选中</el-button>
             <el-button size="mini" @click="selectDel('productCategoryId')">全部删除</el-button>
           </div>
           <div class="businessReport-customize-select-height"></div>
@@ -103,16 +106,12 @@
           @change="_startTime"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item>
-      </el-form-item>
+      <el-form-item></el-form-item>
       <el-button type="primary" @click="submitForm" icon="el-icon-search">查询</el-button>
+      <el-button @click="resetForm('ruleForm')" icon="el-icon-circle-close-outline">重置</el-button>
       <el-form-item>
-        <el-button @click="resetForm('ruleForm')" icon="el-icon-circle-close-outline">重置</el-button>
-        <download
-          :formData="ruleForm"
-          :arrDatas="arrData"
-          :startTimes='startTime'
-        ></download>
+        <download :formData="ruleForm" :arrDatas="arrData" :startTimes="startTime"></download>
+        <dataCloumnSetting @upDataCloumnSetting="_upDataCloumnSetting"></dataCloumnSetting>
       </el-form-item>
     </el-form>
   </div>
@@ -174,11 +173,13 @@ export default {
   methods: {
     // 查询BU列表
     _findBu() {
-      this.$ajax.get("http://192.168.1.179:10028/search/findBu").then(res => {
-        if (res.data.code === ERR_OK) {
-          this.arrData.findBu = res.data.data;
-        }
-      });
+      this.$ajax
+        .get(this.URL_ROOT + this.BUSINESSREPORT_SERVICE + "/search/findBu")
+        .then(res => {
+          if (res.data.code === ERR_OK) {
+            this.arrData.findBu = res.data.data;
+          }
+        });
     },
     // 根据Bu查询国家和产品数据
     _findProductsByBu() {
@@ -188,7 +189,9 @@ export default {
       this.arrData.productCategory = [];
       this.$ajax
         .get(
-          "http://192.168.1.179:10028/search/findProductsByBu?businessUnitId=" +
+          this.URL_ROOT +
+            this.BUSINESSREPORT_SERVICE +
+            "/search/findProductsByBu?businessUnitId=" +
             this.ruleForm.businessUnitId.join(",")
         )
         .then(res => {
@@ -203,7 +206,9 @@ export default {
       this.ruleForm.productCategoryId = [];
       this.$ajax
         .get(
-          "http://192.168.1.179:10028/search/findProductsByBuAndCountry?businessUnitId=" +
+          this.URL_ROOT +
+            this.BUSINESSREPORT_SERVICE +
+            "/search/findProductsByBuAndCountry?businessUnitId=" +
             this.ruleForm.businessUnitId.join(",") +
             "&countryId=" +
             this.ruleForm.countryId.join(",")
@@ -224,7 +229,9 @@ export default {
       this.ruleForm.productId = [];
       this.$ajax
         .get(
-          "http://192.168.1.179:10028/search/findProductsByBuAndCountryAndCategory?businessUnitId=" +
+          this.URL_ROOT +
+            this.BUSINESSREPORT_SERVICE +
+            "/search/findProductsByBuAndCountryAndCategory?businessUnitId=" +
             this.ruleForm.businessUnitId.join(",") +
             "&countryId=" +
             this.ruleForm.countryId.join(",") +
@@ -251,7 +258,7 @@ export default {
     },
     // 提交查询
     submitForm() {
-      this.$store.commit('businessReport',this.ruleForm);
+      this.$store.commit("businessReport", this.ruleForm);
       this.$emit("submitForm");
     },
     // 重置条件
@@ -296,11 +303,16 @@ export default {
       } else if (id == "productCategoryId") {
         this._findProductsByBuAndCountryAndCategory();
       }
+    },
+    _upDataCloumnSetting() {
+      this.$emit("upDataCloumnSetting");
     }
   },
   components: {
     download: resolve =>
-      require(["components/businessReport/opts/download.vue"], resolve)
+      require(["components/businessReport/opts/download.vue"], resolve),
+    dataCloumnSetting: resolve =>
+      require(["components/businessReport/opts/dataCloumnSetting.vue"], resolve)
   }
 };
 </script>

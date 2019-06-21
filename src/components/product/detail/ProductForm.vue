@@ -323,7 +323,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .ProductForm-box-warp {
   border-radius: 2px;
   border: 1px solid #DCDFE6; 

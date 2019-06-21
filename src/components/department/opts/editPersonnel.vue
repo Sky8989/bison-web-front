@@ -81,7 +81,7 @@ export default {
       this.formedit.userDisplayName = this.personnelItem.userDisplayName;
       this.formedit.userId = this.personnelItem.userId;
       this.formedit.roleId = this.personnelItem.roleId;
-      this.parentDeptId = this.personnelItem.deptIdList
+      this.parentDeptId = this.personnelItem.deptIdList;
     },
     // 修改人员信息提交
     _addpersonnel(formName) {

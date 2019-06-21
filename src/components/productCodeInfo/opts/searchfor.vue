@@ -114,7 +114,7 @@ export default {
   methods: {
     // 查询BU列表
     _findBu() {
-      this.$ajax.get("http://192.168.1.179:10030/search/findBu").then(res => {
+      this.$ajax.get(this.URL_ROOT+this.CODINGINFORMATIONMANAGEMENT_SERVICE+"/search/findBu").then(res => {
         if (res.data.code === ERR_OK) {
           this.arrSearchData.findBu = res.data.data;
         }
@@ -128,7 +128,7 @@ export default {
       this.searchfor.asinId = []
       this.$ajax({
         method: "post",
-        url: "http://192.168.1.179:10030/search/findByBu",
+        url: this.URL_ROOT+this.CODINGINFORMATIONMANAGEMENT_SERVICE+"/search/findByBu",
         data: this.searchfor
       }).then(res => {
         if (res.data.code === ERR_OK) {
@@ -143,7 +143,7 @@ export default {
       this.searchfor.asinId = []
       this.$ajax({
         method: "post",
-        url: "http://192.168.1.179:10030/search/findByBuAndCategory",
+        url: this.URL_ROOT+this.CODINGINFORMATIONMANAGEMENT_SERVICE+"/search/findByBuAndCategory",
         data: this.searchfor
       }).then(res => {
         if (res.data.code === ERR_OK) {
@@ -157,7 +157,7 @@ export default {
       this.searchfor.asinId = []
       this.$ajax({
         method: "post",
-        url: "http://192.168.1.179:10030/search/findByBuAndCategoryAndModelNumber",
+        url: this.URL_ROOT+this.CODINGINFORMATIONMANAGEMENT_SERVICE+"/search/findByBuAndCategoryAndModelNumber",
         data: this.searchfor
       }).then(res => {
         if (res.data.code === ERR_OK) {

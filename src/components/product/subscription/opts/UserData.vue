@@ -48,7 +48,7 @@
             <el-col :span="7">
               <el-form-item label="产品型号">
                 <el-select  placeholder="请选择产品型号"  filterable  clearable v-model="form.productModelNumber" @change="form_chooseProductModelNumber()">
-                  <el-option v-for="product in formProductModelNumberList" :key="product.productModelNumber" :value="product.productModelNumber" :label="product.productModelNumber"></el-option>
+                  <el-option v-for="product in formProductModelNumberList" :key="product.productId" :value="product.productModelNumber" :label="product.productModelNumber"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -155,7 +155,7 @@
       name: "UserData",
       components: {
         download: resolve =>
-          require(["components/xlsx/download.vue"], resolve),
+          require(["components/common/download-xlsx.vue"], resolve),
         UserLeftSelect:resolve =>
           require(['components/product/subscription/opts/UserLeftSelect.vue'], resolve),
       },
@@ -227,6 +227,8 @@
             if(res.data.code == "200"){
               var data = res.data.data
               this.productCategoryList = data
+              console.log("this.productCategoryList")
+              console.log(this.productCategoryList)
             }
           })
         },
@@ -347,6 +349,10 @@
         },
         search(){
           var url = this.URL_ROOT + this.URL_PREFIX + "/productSubscription/findProductSubscriptionList"
+
+          //初始化 子组件 下拉列表的位置
+       //   this.$refs.userLeftSelect.initInputSelectAndShowInput()
+
           this.requerstSearch(url)
         },
         requerstSearch(url){
@@ -420,7 +426,9 @@
               console.log("res")
               console.log(res.data.data)
               this.userChargeList = res.data.data
-              his.$message(res.data.msg)
+              //初始化 子组件 初始化
+              this.$refs.userLeftSelect.init()
+              this.$message(res.data.msg)
             }else if(res.data.code =="500"){
               this.$message(res.data.msg)
             }
@@ -471,12 +479,7 @@
                 console.log(error)
               })
             });
-
           }
-
-
-
-
         },
         //获取选中的用户id
         getUserIds(data){

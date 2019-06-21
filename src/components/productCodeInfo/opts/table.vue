@@ -1,6 +1,6 @@
 <template>
   <div class="productCode-table-wrap">
-    <dataSave :dataColum="dataColum" @update="updataSave"></dataSave>
+    <dataColumSetting :dataColum="dataColum" @dataColum="upDataColumSetting"></dataColumSetting>
     <download :tableData="tableData" :dataColum="dataColum"></download>
     <el-table
       :data="tableData"
@@ -108,7 +108,7 @@ export default {
       this.loading = true;
       this.$ajax({
         method: "post",
-        url: "http://192.168.1.179:10030/searchData/findData",
+        url: this.URL_ROOT+this.CODINGINFORMATIONMANAGEMENT_SERVICE+"/searchData/findData",
         data: this.submitFormData
       }).then(res => {
         if (res.data.code === ERR_OK) {
@@ -118,7 +118,7 @@ export default {
         this.loading = false;
       });
     },
-    updataSave(val) {
+    upDataColumSetting(val) {
       this.dataColum = val;
     }
   },
@@ -128,8 +128,8 @@ export default {
     }
   },
   components: {
-    dataSave: resolve =>
-      require(["components/productCodeInfo/opts/dataSave.vue"], resolve),
+    dataColumSetting: resolve =>
+      require(["components/productCodeInfo/opts/dataColumSetting.vue"], resolve),
     download: resolve =>
       require(["components/productCodeInfo/opts/download.vue"], resolve),
     imgZoom

@@ -8,7 +8,12 @@
       </el-table>
     </div>
     <el-dialog title="账号数据状态" :visible.sync="dialogTableVisible">
-      <el-table :data="findAccountDataStatusBy" border :header-cell-style="getRowClass" height="500">
+      <el-table
+        :data="findAccountDataStatusBy"
+        border
+        :header-cell-style="getRowClass"
+        height="500"
+      >
         <el-table-column property="recordDate" label="日期">
           <template slot-scope="scope">{{scope.row.recordDate | formatDate}}</template>
         </el-table-column>
@@ -26,42 +31,58 @@
         ></el-table-column>
         <el-table-column property="syncwire" label="syncwire">
           <template slot-scope="scope">
-            <span :class="{'yellow':scope.row.Syncwire === 0,'red':scope.row.Syncwire === ''}">{{scope.row.Syncwire | formatText}}</span>
+            <span
+              :class="{'yellow':scope.row.Syncwire === 0,'red':scope.row.Syncwire === ''}"
+            >{{scope.row.Syncwire | formatText}}</span>
           </template>
         </el-table-column>
         <el-table-column property="SyncwireUK" label="syncwireuk">
           <template slot-scope="scope">
-            <span :class="{'yellow':scope.row.SyncwireUK === 0,'red':scope.row.SyncwireUK === ''}">{{scope.row.SyncwireUK | formatText}}</span>
+            <span
+              :class="{'yellow':scope.row.SyncwireUK === 0,'red':scope.row.SyncwireUK === ''}"
+            >{{scope.row.SyncwireUK | formatText}}</span>
           </template>
         </el-table-column>
         <el-table-column property="Atumtek" label="atumtek">
           <template slot-scope="scope">
-            <span :class="{'yellow':scope.row.Atumtek === 0,'red':scope.row.Atumtek === ''}">{{scope.row.Atumtek | formatText}}</span>
+            <span
+              :class="{'yellow':scope.row.Atumtek === 0,'red':scope.row.Atumtek === ''}"
+            >{{scope.row.Atumtek | formatText}}</span>
           </template>
         </el-table-column>
         <el-table-column property="Addsfit" label="Addsfit">
           <template slot-scope="scope">
-            <span :class="{'yellow':scope.row.Addsfit === 0,'red':scope.row.Addsfit === ''}">{{scope.row.Addsfit | formatText}}</span>
+            <span
+              :class="{'yellow':scope.row.Addsfit === 0,'red':scope.row.Addsfit === ''}"
+            >{{scope.row.Addsfit | formatText}}</span>
           </template>
         </el-table-column>
         <el-table-column property="Gomum" label="gomum">
           <template slot-scope="scope">
-            <span :class="{'yellow':scope.row.Gomum === 0,'red':scope.row.Gomum === ''}">{{scope.row.Gomum | formatText}}</span>
+            <span
+              :class="{'yellow':scope.row.Gomum === 0,'red':scope.row.Gomum === ''}"
+            >{{scope.row.Gomum | formatText}}</span>
           </template>
         </el-table-column>
         <el-table-column property="Fansful" label="fansful">
           <template slot-scope="scope">
-            <span :class="{'yellow':scope.row.Fansful === 0,'red':scope.row.Fansful === ''}">{{scope.row.Fansful | formatText}}</span>
+            <span
+              :class="{'yellow':scope.row.Fansful === 0,'red':scope.row.Fansful === ''}"
+            >{{scope.row.Fansful | formatText}}</span>
           </template>
         </el-table-column>
         <el-table-column property="Aracase" label="aracase">
           <template slot-scope="scope">
-            <span :class="{'yellow':scope.row.Aracase === 0,'red':scope.row.Aracase === ''}">{{scope.row.aracase | formatText}}</span>
+            <span
+              :class="{'yellow':scope.row.Aracase === 0,'red':scope.row.Aracase === ''}"
+            >{{scope.row.aracase | formatText}}</span>
           </template>
         </el-table-column>
         <el-table-column property="Rosesy" label="rosesy">
           <template slot-scope="scope">
-            <span :class="{'yellow':scope.row.Rosesy === 0,'red':scope.row.Rosesy === ''}">{{scope.row.rosesy | formatText}}</span>
+            <span
+              :class="{'yellow':scope.row.Rosesy === 0,'red':scope.row.Rosesy === ''}"
+            >{{scope.row.rosesy | formatText}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -88,15 +109,15 @@ export default {
       return formatDate(date, "yyyy-MM-dd");
     },
     // 数据过滤
-    formatText(val){
-      if(val === ''){
-        return '无数据'
-      }else if(val === 0){
-        return '正常但销售0'
-      }else if(val === undefined){
-        return ''
-      }else{
-        return '正常'
+    formatText(val) {
+      if (val === "") {
+        return "无数据";
+      } else if (val === 0) {
+        return "正常但销售0";
+      } else if (val === undefined) {
+        return "";
+      } else {
+        return "正常";
       }
     }
   },
@@ -111,7 +132,11 @@ export default {
     },
     _findCurrencyExchange() {
       this.$ajax
-        .get("http://192.168.1.179:10028/exchange/findCurrencyExchange")
+        .get(
+          this.URL_ROOT +
+            this.BUSINESSREPORT_SERVICE +
+            "/exchange/findCurrencyExchange"
+        )
         .then(res => {
           this.findCurrencyExchange = res.data.data;
         });
@@ -120,7 +145,9 @@ export default {
       this.dialogTableVisible = true;
       this.$ajax
         .get(
-          "http://192.168.1.179:10028/accountDataStatus/findAccountDataStatusByTime"
+          this.URL_ROOT +
+            this.BUSINESSREPORT_SERVICE +
+            "/accountDataStatus/findAccountDataStatusByTime"
         )
         .then(res => {
           this.findAccountDataStatusBy = res.data.data;
@@ -151,11 +178,13 @@ export default {
   .el-table {
     border: 1px solid #EBEEF5;
   }
-  .yellow{
-    color #ffc107
+
+  .yellow {
+    color: #ffc107;
   }
-  .red{
-    color #f44336
+
+  .red {
+    color: #f44336;
   }
 }
 </style>

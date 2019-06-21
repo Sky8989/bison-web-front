@@ -333,7 +333,7 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .Document-product-warp {
   position relative
   .avatar-uploader .el-upload {

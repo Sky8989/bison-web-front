@@ -30,6 +30,7 @@
             this.input.modelNumbers = ""
             this.initModelNumber()
           },
+
         initModelNumber(){
           var url = this.URL_ROOT + this.URL_PREFIX  + "/productSubscription/findModelNumberAll"
           this.$ajax.get( url,{

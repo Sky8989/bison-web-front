@@ -236,7 +236,7 @@
         },
         searchSalePlanItemList(){
           // console.log"searchSalePlanItemList")
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesOperationsViewHandler/findSalePlanItemList"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/salesOperationsViewHandler/findSalePlanItemList"
 
           var data = {
             countryIdList:this.tableHeadCountryList,
@@ -335,7 +335,7 @@
         initItemKeyList(){
           // console.log"initItemKeyList")
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY +"/salesPalnSalesViewHandler/findItemKeyAll/"  + this.userId
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN +"/salesPalnSalesViewHandler/findItemKeyAll/"  + this.userId
           this.$ajax.get(url,{
 
 
@@ -390,7 +390,7 @@
             this.$message.error("销售计划子项id不能为空")
             return
           }
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/updateStatusBySalePlanItemId/" +id +"/" + status
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesViewHandler/updateStatusBySalePlanItemId/" +id +"/" + status
           this.$ajax.put(url,{}).then(res=>{
             if(res.data.code == 200){
               this.$message.success(res.data.msg)
@@ -413,7 +413,7 @@
             this.$message.error("请先选择销售计划!")
             return
           }
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesPalnSalesViewHandler/batchUpdateStatusBySalePlanItemIdList"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesPalnSalesViewHandler/batchUpdateStatusBySalePlanItemIdList"
           var data = {
             status:status,
             salePlanItemIdList:this.batchUpdateStatuIdList
@@ -464,7 +464,7 @@
             return
           }
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesOperationsViewHandler/addTotalSafetyDay"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesOperationsViewHandler/addTotalSafetyDay"
 
           this.$ajax({
             method:"post",
@@ -508,7 +508,7 @@
             return
           }
 
-          var url = this.URL_ROOT + this.PREFIX_INVENTORY + "/salesOperationsViewHandler/addRemark"
+          var url = this.URL_ROOT + this.PREFIX_SALES_PLAN + "/salesOperationsViewHandler/addRemark"
           this.$ajax({
             method:"post",
             url:url,

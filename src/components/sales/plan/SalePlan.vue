@@ -49,12 +49,10 @@
         //   this.$refs.salePlanSalesView.init()
           }
           else if(tabName == "主管视图"){
-            console.log("主管视图")
            this.$refs.salePlanSalesInChargeView.init()
 
           }
           else if(tabName == "采购视图"){
-            console.log("采购视图")
            this.$refs.salePlanOperationsView.init()
           }
 

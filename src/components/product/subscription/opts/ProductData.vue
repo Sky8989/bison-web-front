@@ -1,6 +1,5 @@
 <template>
     <div class="productData">
-
       <el-container>
 
         <el-aside name="left">
@@ -9,7 +8,12 @@
 
 
         <el-main name="main">
-          <el-table name="showTable" border="border" height="250px" style="width: 100%" :data="userChargeList" @cell-click="clickUserCharge">
+
+          <pagination :pagination="pagination" :length="userChargeList.length"></pagination>
+
+
+          <el-table name="showTable" border="border" height="250px" style="width: 100%" :data="
+          userChargeList.slice((pagination.currpage - 1) * pagination.pagesize, pagination.currpage * pagination.pagesize )" @cell-click="clickUserCharge">
             <el-table-column type="index"></el-table-column>
             <el-table-column prop="businessUnit" label="BU" ></el-table-column>
             <el-table-column prop="productCategory" label="产品系列" ></el-table-column>
@@ -47,10 +51,15 @@
 </template>
 
 <script>
+  import pagination from "components/common/pagination.vue";
     export default {
         name: "ProductData",
       data(){
           return{
+            pagination: {
+              pagesize: 20,
+              currpage: 1
+            },
             selected:false,
             disabled:true,
             userChargeId:[],
@@ -68,6 +77,8 @@
       },
       components:{
         'ProductLeftSelect'  : resolve => require(['components/product/subscription/opts/ProductLeftSelect.vue'], resolve),
+        pagination
+
       },
       methods:{
           init(){
@@ -82,14 +93,19 @@
             this.$refs.productLeftSelect.init()
           },
         search(){
-          var url = this.URL_ROOT + this.URL_PREFIX + "/productSubscription/findProductSubscriptionList"
+
+          var url = this.URL_ROOT + this.URL_PREFIX + "/productSubscriptionProductRelHandler/findProductSubscriptionProductRelList"
           this.requerstSearch(url)
         },
         requerstSearch(url){
 
+          this.userChargeList = []
+          this.pagination.currpage = 1;
+
           var data = {
             productModelNumber:this.productModelNumber == "" ? null : this.productModelNumber,
           }
+
 
           this.$ajax({
             method:"post",
@@ -146,8 +162,8 @@
             console.log(cell.label)
             console.log(row.disabled)
           if(cell.label == "负责人"){
-           // row.disabled = false
-            this.$message("请选择负责人")
+            row.disabled = false
+            this.$message(" 请选择负责人")
           }
 
           if(cell.label == "操作"){
@@ -252,7 +268,8 @@
         },
         updateDisabled(row){
             row.disabled = false
-        }
+        },
+
       }
     }
 </script>

@@ -29,6 +29,7 @@
       <el-table-column
         v-for="(item, index) in col"
         :key="`col_${index}`"
+        v-if="dataCloumn[item.prop] == 1"
         :prop="dropCol[index].prop"
         :label="item.label"
       ></el-table-column>
@@ -46,6 +47,7 @@ export default {
       tableData: [],
       summary: [],
       showLine: true,
+      dataCloumn: [],
       col: [
         {
           label: "日期",
@@ -157,9 +159,13 @@ export default {
     // 按天周月查询businessReport数据
     businessReports() {
       this.loading = true;
+      let businessReportId = '' 
+      if(this.businessReport === 'findBusinessReport'){
+        businessReportId = '/' + this.$store.state.LoginedUser.userId
+      }
       this.$ajax({
         method: "post",
-        url: "http://192.168.1.179:10028/business/" + this.businessReport,
+        url: this.URL_ROOT+this.BUSINESSREPORT_SERVICE+"/business/" + this.businessReport + businessReportId,
         data: this.$store.state.businessReportData
       }).then(res => {
         this.loading = false;
@@ -167,6 +173,10 @@ export default {
           let data = res.data.data;
           this._arrSortTimeData(data.datas);
           this._arrData(data);
+          if(data.dataCloumn){
+            this.$store.commit('_businessReportDataCloumnSetting', data.dataCloumn);
+            this.dataCloumn = data.dataCloumn
+          }
         } else {
           this.summary = [];
           this.tableData = [];
@@ -219,6 +229,10 @@ export default {
           this.dropCol.splice(evt.newIndex, 0, oldItem);
         }
       });
+    },
+    _dataCloumn(){
+      this.dataCloumn = this.$store.state.businessReportDataCloumnSetting
+      console.log(this.dataCloumn)
     }
   },
   components: {
