@@ -22,6 +22,7 @@ export default {
     //分页
     handleCurrentChange(cpage) {
       this.pagination.currpage = cpage
+      this.$emit('currpage')
     },
     handleSizeChange(psize) {
       this.pagination.pagesize = psize

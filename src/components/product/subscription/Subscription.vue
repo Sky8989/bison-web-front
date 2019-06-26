@@ -34,6 +34,7 @@
         }
         else if(tabName == "人员对照表"){
           this.$refs.userData.init()
+
         }
         else if(tabName == "产品对照表"){
           this.$refs.productData.init()
@@ -45,6 +46,7 @@
         'TotalData'  : resolve => require(['components/product/subscription/opts/TotalData.vue'], resolve),
         'UserData'  : resolve => require(['components/product/subscription/opts/UserData.vue'], resolve),
         'ProductData'  : resolve => require(['components/product/subscription/opts/ProductData.vue'], resolve),
+
     }
   }
 </script>

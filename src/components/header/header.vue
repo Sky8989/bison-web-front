@@ -1,5 +1,9 @@
 <template>
   <div class="header-warp">
+    <div class="login">
+      <div class="name">{{name}}</div>
+      <el-button @click="logout" size="mini">退出登录</el-button>
+    </div>
     <el-menu :default-active="$route.path" mode="horizontal" text-color="#333">
       <el-menu-item index="1">
         <router-link to="/index">仪表板</router-link>
@@ -46,10 +50,14 @@
           <router-link to="/paoductProfitCalculation">利润测算器</router-link>
         </el-menu-item>
       </el-submenu>
-       <el-menu-item index="５"><router-link to="/businessReport">销售报告</router-link></el-menu-item>
+      <el-menu-item index="５">
+        <router-link to="/businessReport">销售报告</router-link>
+      </el-menu-item>
       <el-submenu index="5">
         <template slot="title">库存中心</template>
-        <el-menu-item index="5-1"><router-link to="/inventory">库存管理</router-link></el-menu-item>
+        <el-menu-item index="5-1">
+          <router-link to="/inventory">库存管理</router-link>
+        </el-menu-item>
         <el-menu-item index="5-2">亚马逊库存(未有)</el-menu-item>
         <el-menu-item index="5-3">
           <router-link to="/shipmentTracking">亚马逊货件追踪</router-link>
@@ -83,7 +91,7 @@
       <el-submenu index="8">
         <template slot="title">OA中心</template>
         <el-menu-item index="8-1">
-           <router-link to="/requireAssistance">事件支持</router-link>
+          <router-link to="/requireAssistance">事件支持</router-link>
         </el-menu-item>
         <el-menu-item index="8-2">运营图片需求进度表(未有)</el-menu-item>
       </el-submenu>
@@ -99,7 +107,9 @@
 const ERR_OK = 200;
 export default {
   data() {
-    return {};
+    return {
+      name: this.$store.state.LoginedUser.roleName
+    };
   },
   created() {},
   computed: {
@@ -130,6 +140,9 @@ export default {
 };
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
+
+</style>
+<style lang="stylus" scoped>
 .el-menu--horizontal {
   .active {
     color: #409EFF !important;
@@ -140,7 +153,6 @@ export default {
     display: block;
   }
 }
-
 .header-warp {
   .el-menu-item {
     margin: 0 20px;
@@ -150,6 +162,19 @@ export default {
   button {
     margin: 10px;
     float: right;
+  }
+
+  .login {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    z-index 9
+    .name{
+      display inline-block
+      margin-top 15px
+      font-size 14px
+      color #666
+    }
   }
 }
 </style>

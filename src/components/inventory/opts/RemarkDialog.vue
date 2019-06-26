@@ -31,7 +31,7 @@
 
 <script>
     export default {
-      name: "RemarkDialog",
+        name: "RemarkDialog",
       props: {
         title: '',        //对话框名称
         id: '',         //需要修改的id
@@ -130,6 +130,7 @@
                this.search()
 
             })
+
           }
 
           this.remarkDialog = false;

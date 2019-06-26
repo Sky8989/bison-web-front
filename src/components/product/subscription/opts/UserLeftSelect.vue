@@ -8,7 +8,7 @@
       </el-select>
 
       <select  size="10" class="el-input el-input--3 el-input--suffix"  style="width: 225px;color: #606266"  v-model="show.userId" @change="chooseUserSearch" >
-        <option label="查询所有数据"></option>
+       <!-- <option label="查询所有数据"></option>-->
         <option v-for="user in showUserList"  :key="user.userId" :value="user.userId" :label="user.userName + '  -- ' + user.roleName " selected></option>
 
       </select>
@@ -20,8 +20,8 @@
         name: "UserLeftSelect",
       data(){
           return{
-            input:{userId:""},
-            show:{userId:""},
+            input:{userId:1},
+            show:{userId:1},
             inputUserList:[],
             showUserList:[],
             userChargeList:[],    //产品负责人列表
@@ -30,15 +30,15 @@
       },
       methods:{
           init(){
-            this.input.userId = ""
-            this.show.userId = ""
+            this.input.userId = 1
+            this.show.userId = 1
             this.inputUserList = [],
             this.showUserList = [],
             this.getDeptUserAll()
           },
         initInputSelectAndShowInput(){
-            this.input.userId = ""
-            this.show.userId = ""
+            this.input.userId = 1
+            this.show.userId = 1
 
           },
         getDeptUserAll(){

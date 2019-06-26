@@ -1,13 +1,27 @@
 <template>
-    <div>
-        <searchfor></searchfor>
-    </div>
+  <div class="shipmentTracking-warp">
+      <searchfor @submitForm="submitForm"></searchfor>
+      <v-table :ruleForm="ruleForm"></v-table>
+  </div>
 </template>
 <script>
+import searchfor from 'components/shippingRefund/opts/ship-searchfor.vue'
+import table from 'components/shippingRefund/opts/ship-table.vue'
 export default {
+    data(){
+        return { 
+            ruleForm:{}
+        }
+    },
+    methods: {
+        submitForm(data){
+            this.ruleForm = JSON.parse(JSON.stringify(data))
+        }
+    }, 
     components: {
-        searchfor: resolve =>
-      require(["components/shippingRefund/opts/ship-searchfor.vue"], resolve),
+        searchfor,
+        'v-table':table
     }
 }
 </script>
+  

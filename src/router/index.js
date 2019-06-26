@@ -147,6 +147,15 @@ const routes = [
       path: '/shippingRefund/ship',
       name:'发货',
       component: resolve => require(['../components/shippingRefund/ship.vue'], resolve),
+      children: [{
+        path: '/shippingRefund/ship/edayun',
+        name:'发货-易达云',
+        component: resolve => require(['../components/shippingRefund/opts/ship-edayun.vue'], resolve), 
+      },{
+        path: '/shippingRefund/ship/amazon',
+        name:'发货-亚马逊',
+        component: resolve => require(['../components/shippingRefund/opts/ship-amazon.vue'], resolve), 
+      }]
     },{
       path: '/shippingRefund/refund',
       name:'退款',

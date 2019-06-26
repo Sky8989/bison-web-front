@@ -7,7 +7,7 @@
       </el-select>
 
       <select   size="10" class="el-input el-input--3 el-input--suffix"  style="width: 225px;color: #606266"  v-model="show.modelNumbers" @change="chooseModelNumberSearch" >
-        <option label="查询所有数据" ></option>
+       <!-- <option label="查询所有数据" ></option>-->
         <option v-for="product in showProductList"  :key="product.productModelNumber" :value="product.productModelNumber" :label="product.productModelNumber"></option>
       </select>
     </div>
@@ -18,8 +18,8 @@
         name: "productLeftSelect",
       data(){
           return{
-            input:{modelNumbers:""},
-            show:{modelNumbers:""},
+            input:{modelNumbers:"SW-01"},
+            show:{modelNumbers:"SW-01"},
             inputProductList:[],
             showProductList:[],
             userChargeList:[],    //产品负责人列表
@@ -27,7 +27,7 @@
       },
       methods:{
           init(){
-            this.input.modelNumbers = ""
+            this.input.modelNumbers = "SW-01"
             this.initModelNumber()
           },
 

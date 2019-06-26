@@ -63,7 +63,7 @@
             selected:false,
             disabled:true,
             userChargeId:[],
-            productModelNumber:'',
+            productModelNumber:'SW-01',
             userChargeList:[
              /* {businessUnit:"aaa",productCategory:"bbb",countryName:"Uk",userName:"1号负责人",departmentName:"A组",productModelNumber:"samgda",asin:"aaaa"},
               {businessUnit:"aaa",productCategory:"bbb",countryName:"Uk",userName:"1号负责人",departmentName:"A组",productModelNumber:"samgda",asin:"aaaa"},*/
@@ -103,7 +103,7 @@
           this.pagination.currpage = 1;
 
           var data = {
-            productModelNumber:this.productModelNumber == "" ? null : this.productModelNumber,
+            productModelNumber:this.productModelNumber == "" ? 'SW-01' : this.productModelNumber,
           }
 
 

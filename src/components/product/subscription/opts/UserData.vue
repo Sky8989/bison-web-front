@@ -173,7 +173,7 @@
               productCategory :"",
               productModelNumber :"",
               asinId :"",
-              userCharge:"",
+              userCharge:1,
 
             },
             addProductSub:false,

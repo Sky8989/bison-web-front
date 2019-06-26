@@ -15,13 +15,6 @@
       <change beforePath="$PROJECT_DIR$/components/product/Product.vue" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/components/product/product.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/product/product.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src" beforeDir="true" />
-      <change beforePath="$PROJECT_DIR$/src/components/header/header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/header/header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/inventory/opts/RemarkDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/inventory/opts/RemarkDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/subscription/Subscription.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/subscription/Subscription.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/subscription/opts/ProductData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/subscription/opts/ProductData.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/subscription/opts/ProductLeftSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/subscription/opts/ProductLeftSelect.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/subscription/opts/UserData.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/subscription/opts/UserData.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/subscription/opts/UserLeftSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/subscription/opts/UserLeftSelect.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/sales/plan/SalePlan.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sales/plan/SalePlan.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
     </list>
@@ -42,22 +35,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/seller/data/SellerData.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1512">
-              <caret line="104" column="41" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="41" />
+            <state relative-caret-position="684">
+              <caret line="58" column="19" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
               <folding>
                 <element signature="n#el-dialog#0;n#div#0;n#template#0;n#!!top" />
                 <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#1477#1529#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/seller/data/opts/SellerAuth.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="35" column="45" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="45" />
+            <state relative-caret-position="18">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding>
+                <element signature="n#el-dialog#0;n#div#0;n#template#0;n#!!top" />
                 <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#el-dialog#1;n#div#0;n#template#0;n#!!top" />
                 <element signature="n#style#0;n#el-form#0;n#el-dialog#1;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -68,20 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/seller/data/opts/SellerDataModule.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="40" column="17" lean-forward="true" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
+            <state relative-caret-position="36">
+              <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -97,43 +83,38 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>deleteUserCharge</find>
-      <find>addRemark</find>
-      <find>search()</find>
-      <find>搜索</find>
-      <find>submitForm</find>
-      <find>pagination el-pagination is-background</find>
-      <find>handleCurrentChange</find>
-      <find>tableData</find>
-      <find>currpage</find>
-      <find>pagination</find>
-      <find>pagesize</find>
-      <find>addProductByUserCharge</find>
-      <find>ser</find>
-      <find>mwsInterfaceDialogClose</find>
-      <find>subAccountDialog</find>
-      <find>BrandDialogClose</find>
-      <find>addBrand</find>
-      <find>$emit</find>
-      <find>sellerList</find>
-      <find>&amp;&amp;</find>
-      <find>subAccount</find>
-      <find>title</find>
-      <find>SellerData</find>
-      <find>this.$refs.sellerAuth.init</find>
       <find>init</find>
       <find>sellerDataModule</find>
-      <find>sellerAuth</find>
-      <find>components</find>
+      <find>RemarkDialog</find>
+      <find>sellerVOList</find>
+      <find>SellerAuth</find>
+      <find>el-</find>
+      <find>el-boo</find>
+      <find>&lt;el-buuton</find>
+      <find>el-buuton</find>
+      <find>if</find>
+      <find>&lt;el-link&gt;</find>
+      <find>&lt;el-link</find>
+      <find>form</find>
+      <find>取消</find>
+      <find>sellerHandler</find>
+      <find>&lt;el-table</find>
+      <find>aaa</find>
+      <find>chooseBrandId</find>
+      <find>searcj</find>
+      <find>chooseparentBrandId</find>
+      <find>created</find>
+      <find>searc</find>
       <find>search</find>
-      <find>totalData</find>
+      <find>brandId</find>
+      <find>userId</find>
+      <find>userCharge</find>
+      <find>this.input.userId</find>
+      <find>mwsId</find>
+      <find>findSellerMwsBySellerId</find>
+      <find>sellerId</find>
     </findStrings>
     <replaceStrings>
-      <replace>name === &quot;form&quot;</replace>
-      <replace>modelNumbers</replace>
-      <replace>userIds</replace>
-      <replace>inputUserList</replace>
-      <replace>showUserList</replace>
       <replace>userId</replace>
       <replace>unionIds</replace>
       <replace>userCharge</replace>
@@ -159,6 +140,11 @@
       <replace>this.URL_ROOT + this.PREFIX_INVENTORY</replace>
       <replace>/productSubscriptionProductRelHandler/findProductSubscriptionProductRelList</replace>
       <replace>sellerVOList</replace>
+      <replace />
+      <replace>el-button</replace>
+      <replace>sellerAuthHandler</replace>
+      <replace>parentBrandId</replace>
+      <replace>chooseParentBrandId</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -205,25 +191,25 @@
         <option value="$PROJECT_DIR$/src/components/inventory/Inventory.vue" />
         <option value="$PROJECT_DIR$/src/components/badReview/opts/table.vue" />
         <option value="$PROJECT_DIR$/src/components/inventory/opts/RemarkDialog.vue" />
-        <option value="$PROJECT_DIR$/src/components/product/subscription/opts/ProductData.vue" />
         <option value="$PROJECT_DIR$/src/components/product/subscription/opts/ProductLeftSelect.vue" />
-        <option value="$PROJECT_DIR$/src/components/product/subscription/opts/UserLeftSelect.vue" />
-        <option value="$PROJECT_DIR$/src/components/product/subscription/opts/UserData.vue" />
         <option value="$PROJECT_DIR$/src/router/index.js" />
         <option value="$PROJECT_DIR$/src/components/header/header.vue" />
-        <option value="$PROJECT_DIR$/config/index.js" />
-        <option value="$PROJECT_DIR$/src/components/seller/data/opts/SellerDataModule.vue" />
         <option value="$PROJECT_DIR$/src/components/sales/plan/SalePlan.vue" />
-        <option value="$PROJECT_DIR$/src/components/seller/data/SellerData.vue" />
         <option value="$PROJECT_DIR$/src/components/product/subscription/Subscription.vue" />
-        <option value="$PROJECT_DIR$/src/components/seller/data/opts/SellerAuth.vue" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/components/seller/data/opts/SellerDataModule.vue" />
+        <option value="$PROJECT_DIR$/src/components/seller/data/SellerData.vue" />
+        <option value="$PROJECT_DIR$/src/components/product/subscription/opts/ProductData.vue" />
+        <option value="$PROJECT_DIR$/src/components/product/subscription/opts/UserLeftSelect.vue" />
+        <option value="$PROJECT_DIR$/src/components/product/subscription/opts/UserData.vue" />
+        <option value="$PROJECT_DIR$/config/index.js" />
+        <option value="$PROJECT_DIR$/src/components/seller/data/opts/SellerAuth.vue" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="495" />
-    <option name="y" value="193" />
+    <option name="x" value="173" />
+    <option name="y" value="122" />
     <option name="width" value="1209" />
     <option name="height" value="863" />
   </component>
@@ -235,6 +221,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -258,57 +245,17 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="bison-web-front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bison-web-front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bison-web-front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bison-web-front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-              <item name="subscription" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bison-web-front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bison-web-front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="seller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bison-web-front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bison-web-front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="seller" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bison-web-front" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bison-web-front" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="seller" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="opts" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/seller/data/opts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -563,7 +510,13 @@
       <workItem from="1560926179963" duration="9112000" />
       <workItem from="1561018881099" duration="16464000" />
       <workItem from="1561088996337" duration="5332000" />
-      <workItem from="1561099309110" duration="4861000" />
+      <workItem from="1561099309110" duration="20835000" />
+      <workItem from="1561364859768" duration="1215000" />
+      <workItem from="1561374467420" duration="1313000" />
+      <workItem from="1561435859778" duration="8959000" />
+      <workItem from="1561457190060" duration="1170000" />
+      <workItem from="1561535739470" duration="4785000" />
+      <workItem from="1561546430037" duration="1717000" />
     </task>
     <task id="LOCAL-00001" summary="add">
       <created>1559299717040</created>
@@ -576,7 +529,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="728345000" />
+    <option name="totallyTimeSpent" value="763478000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -589,22 +542,21 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="51" y="25" width="1869" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49413735" visible="true" weight="0.19393283" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4928161" visible="true" weight="0.26706392" />
       <window_info id="Structure" order="1" sideWeight="0.50586265" side_tool="true" weight="0.343987" />
-      <window_info id="Favorites" order="2" sideWeight="0.504717" side_tool="true" weight="0.22101842" />
+      <window_info id="Favorites" order="2" sideWeight="0.5071839" side_tool="true" weight="0.26706392" />
       <window_info id="npm" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.20756757" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.24324325" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24756756" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39783785" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.32864866" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32864866" />
-      <window_info anchor="bottom" x="58" y="411" width="1855" height="292" id="Terminal" order="9" visible="true" weight="0.42162162" />
+      <window_info anchor="bottom" x="58" y="411" width="1855" height="292" id="Terminal" order="9" weight="0.31675676" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="11" weight="0.41689372" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.3297414" />
@@ -643,34 +595,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="add" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/product/detail/Tabs.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="24" lean-forward="true" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/sales/plan/opts/AddItemKeyAndSalesVolumeRule.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="143" column="98" lean-forward="true" selection-start-line="143" selection-start-column="75" selection-end-line="143" selection-end-column="98" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/sales/plan/opts/SalePlanOperationsView.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="320" column="26" lean-forward="true" selection-start-line="320" selection-start-column="26" selection-end-line="320" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/sales/plan/opts/SalePlanSalesInChargeViewTable.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="363" column="8" selection-start-line="363" selection-start-column="8" selection-end-line="363" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/xlsx/download.vue" />
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -688,39 +612,6 @@
     <entry file="file://$PROJECT_DIR$/src/router/index.js.mine" />
     <entry file="file://$PROJECT_DIR$/src/router/index.js.r1407" />
     <entry file="file://$PROJECT_DIR$/src/router/index.js.r1559" />
-    <entry file="file://$PROJECT_DIR$/src/components/inventory/opts/SkuView.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="107" selection-start-line="107" selection-end-line="107" />
-          <folding>
-            <element signature="n#el-dialog#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#span#0;n#el-form-item#2;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#div#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-form-item#0;n#el-form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#el-table#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#el-table-column#18;n#el-table#0;n#div#0;n#template#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/inventory/opts/ModelNumberView.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="159" selection-start-line="159" selection-end-line="159" />
-          <folding>
-            <element signature="n#el-dialog#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#span#0;n#el-form-item#2;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#p#0;n#div#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#el-form#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#el-form-item#0;n#el-form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#el-table-column#13;n#el-table#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#el-table-column#14;n#el-table#0;n#div#0;n#template#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/badReview/opts/record.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -753,33 +644,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/dev.env.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/product/subscription/opts/ProductLeftSelect.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="n#style#0;n#select#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/common/pagination.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="15" column="10" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/product/subscription/opts/UserLeftSelect.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="633">
-          <caret line="69" column="41" selection-start-line="69" selection-start-column="41" selection-end-line="69" selection-end-column="41" />
-          <folding>
-            <element signature="n#style#0;n#select#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -792,13 +660,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.vue">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/header/header.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="92" column="27" selection-start-line="92" selection-start-column="27" selection-end-line="92" selection-end-column="27" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/router/index.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -839,31 +700,6 @@
     <entry file="file://$PROJECT_DIR$/src/components/product/detail/Listting.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/product/subscription/opts/ProductData.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2826">
-          <caret line="180" column="29" selection-start-line="180" selection-start-column="29" selection-end-line="180" selection-end-column="29" />
-          <folding>
-            <element signature="n#style#0;n#el-table#0;n#el-main#0;n#el-container#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#el-table#0;n#el-main#0;n#el-container#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#style#0;n#div#0;n#el-main#0;n#el-container#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/product/subscription/opts/UserData.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9405">
-          <caret line="608" column="30" selection-start-line="608" selection-start-column="30" selection-end-line="608" selection-end-column="30" />
-          <folding>
-            <element signature="n#style#0;n#el-button#0;n#el-col#0;n#el-row#0;n#el-main#0;n#el-container#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-dialog#0;n#el-main#0;n#el-container#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-form-item#0;n#el-form#0;n#el-main#0;n#el-container#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-table#0;n#el-main#0;n#el-container#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/productCodeInfo/opts/dataColumSetting.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -894,33 +730,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/inventory/Inventory.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/index/opts/countryTime.vue">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/inventory/opts/RemarkDialog.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="43" lean-forward="true" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/department/opts/tablePersonnel.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-270" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/sales/plan/opts/SalePlanSalesView.vue">
@@ -961,42 +776,184 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/seller/data/opts/SellerDataModule.vue">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="40" column="17" lean-forward="true" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
+        <state relative-caret-position="54">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/inventory/opts/ModelNumberView.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="265" column="25" selection-start-line="265" selection-start-column="13" selection-end-line="265" selection-end-column="25" />
+          <folding>
+            <element signature="n#el-dialog#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#span#0;n#el-form-item#2;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#p#0;n#div#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#el-form#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#el-form-item#0;n#el-form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#el-table-column#14;n#el-table#0;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/inventory/opts/RemarkDialog.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-378">
+          <caret line="33" column="25" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/inventory/Inventory.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="10" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/inventory/opts/SkuView.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="167" column="13" selection-start-line="167" selection-start-column="13" selection-end-line="167" selection-end-column="13" />
+          <folding>
+            <element signature="n#el-dialog#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#span#0;n#el-form-item#2;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#p#0;n#div#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form-item#0;n#el-form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#el-table#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#el-table-column#18;n#el-table#0;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/sales/plan/opts/SalePlanOperationsView.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5560">
+          <caret line="320" column="26" lean-forward="true" selection-start-line="320" selection-start-column="26" selection-end-line="320" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/sales/plan/opts/AddItemKeyAndSalesVolumeRule.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1584">
+          <caret line="143" column="98" lean-forward="true" selection-start-line="143" selection-start-column="75" selection-end-line="143" selection-end-column="98" />
+          <folding>
+            <element signature="n#el-dialog#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#el-dialog#1;n#div#0;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/sales/plan/opts/SalePlanSalesInChargeView.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/header/header.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="92" column="36" selection-start-line="92" selection-start-column="26" selection-end-line="92" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/sales/plan/opts/SalePlanSalesInChargeViewTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="82" column="24" lean-forward="true" selection-start-line="82" selection-start-column="24" selection-end-line="82" selection-end-column="24" />
+          <folding>
+            <element signature="e#7116#8164#0" />
+            <element signature="e#8182#8211#0" />
+            <element signature="e#9327#10561#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/dev.env.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/product/subscription/opts/UserData.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="485" column="36" selection-start-line="485" selection-start-column="26" selection-end-line="485" selection-end-column="36" />
+          <folding>
+            <element signature="n#style#0;n#el-button#0;n#el-col#0;n#el-row#0;n#el-main#0;n#el-container#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-dialog#0;n#el-main#0;n#el-container#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form-item#0;n#el-form#0;n#el-main#0;n#el-container#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-table#0;n#el-main#0;n#el-container#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/product/subscription/opts/UserLeftSelect.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="558">
+          <caret line="31" column="17" lean-forward="true" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+          <folding>
+            <element signature="n#style#0;n#select#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/product/subscription/opts/ProductData.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="105" column="69" selection-start-line="105" selection-start-column="69" selection-end-line="105" selection-end-column="69" />
+          <folding>
+            <element signature="n#style#0;n#el-table#0;n#el-main#0;n#el-container#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#el-main#0;n#el-container#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/product/subscription/opts/ProductLeftSelect.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="29" column="44" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="44" />
+          <folding>
+            <element signature="n#style#0;n#select#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="9" lean-forward="true" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/seller/data/SellerData.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1512">
-          <caret line="104" column="41" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="41" />
+        <state relative-caret-position="684">
+          <caret line="58" column="19" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
           <folding>
             <element signature="n#el-dialog#0;n#div#0;n#template#0;n#!!top" />
             <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#1477#1529#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/seller/data/opts/SellerDataModule.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/seller/data/opts/SellerAuth.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="35" column="45" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="45" />
+        <state relative-caret-position="18">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding>
+            <element signature="n#el-dialog#0;n#div#0;n#template#0;n#!!top" />
             <element signature="n#style#0;n#el-form#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#el-dialog#1;n#div#0;n#template#0;n#!!top" />
             <element signature="n#style#0;n#el-form#0;n#el-dialog#1;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#el-dialog#2;n#div#0;n#template#0;n#!!top" />
             <element signature="n#style#0;n#el-form#0;n#el-dialog#2;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
         </state>
       </provider>
     </entry>

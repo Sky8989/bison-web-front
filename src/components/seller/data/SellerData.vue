@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div >
 
     <!-- 添加账号 -->
     <el-dialog
@@ -11,7 +11,7 @@
 
       <el-form :model="brandForm"  label-width="80px" class="demo-dynamic" style="width: 80%">
 
-       <!-- <input v-model="BrandForm.brandId" hidden/>-->
+       <!-- <input v-model="BrandForm.parentBrandId" hidden/>-->
 
         <el-form-item label="名称:">
           <input v-model="brandForm.brandName" />
@@ -25,7 +25,7 @@
       </div>
     </el-dialog>
 
-    <el-select placeholder="账号"  v-model="brandId" @change="chooseBrandId"  size="mini">
+    <el-select placeholder="账号"  v-model="parentBrandId" @change="chooseParentBrandId"  size="mini">
       <el-option v-for="brand in brandList" :key="brand.brandId" :value="brand.brandId"
                  :label="brand.brandName"></el-option>
     </el-select>
@@ -34,16 +34,15 @@
 
     <el-tabs @tab-click="_handleClick">
 
-      <el-tab-pane label="账号授权" name="账号授权" >
-        <SellerAuth ref="sellerAuth"></SellerAuth>
+      <el-tab-pane label="数据模块" name="数据模块" >
+        <SellerDataModule ref="sellerDataModule" :parentBrandId="parentBrandId"></SellerDataModule>
       </el-tab-pane>
 
-      <el-tab-pane label="数据模块" name="数据模块" >
-        <SellerDataModule ref="sellerDataModule"></SellerDataModule>
+      <el-tab-pane label="账号授权" name="账号授权" >
+        <SellerAuth ref="sellerAuth" :parentBrandId="parentBrandId"></SellerAuth>
       </el-tab-pane>
 
     </el-tabs>
-
 
 
   </div>
@@ -51,19 +50,19 @@
 </template>
 
 <script>
+  import SellerAuth from "../data/opts/SellerAuth.vue"
+  import SellerDataModule from "../data/opts/SellerDataModule.vue"
     export default {
         name: "SellerData",
 
       components: {
-        SellerAuth: resolve =>
-          require(['./opts/SellerAuth.vue'], resolve),
-        SellerDataModule: resolve =>
-          require(['./opts/SellerDataModule.vue'], resolve),
+        SellerAuth,
+        SellerDataModule
       },
       data(){
           return {
             moduleName:'', //模块名称 用来存 数据模块 账号授权
-            brandId:'',
+            parentBrandId:'',
             brandList:[],
             addBrandDialog:false,
             brandForm:{
@@ -90,33 +89,37 @@
           })
         },
 
-        chooseBrandId(){
-          var brandId = this.brandId
-          console.log("brandId = " + brandId)
+        chooseParentBrandId(id){
+          console.log("id =---------------------------- " + id)
+          //赋值
+          this.parentBrandId  = id
+
+
+          var parentBrandId = id
+          console.log("parentBrandId = " + parentBrandId)
           console.log("moduleName = " + this.moduleName)
 
-          if(brandId != null && brandId != '' && brandId != 0){
-            this.$emit("brandId",brandId);
+          if(parentBrandId != null && parentBrandId != '' && parentBrandId != 0){
 
             if(this.moduleName == '数据模块'){
-              this.$refs.sellerAuth.search();
+              this.$refs.sellerDataModule.search(id)
             }
             else if(this.moduleName == "账号授权"){
-              this.$refs.sellerDataModule.search();
+              this.$refs.sellerAuth.search(id)
             }
           }
 
         },
-        _handleClick(tab, event) {
+        _handleClick(tab) {
           var tabName  = tab.name;
           console.log(tabName)
           this.moduleName = tabName
 
           if(tabName == '数据模块'){
-           //this.$refs.sellerDataModule.init()
+           this.$refs.sellerDataModule.init()
           }
           else if(tabName == "账号授权"){
-           // this.$refs.sellerAuth.init()
+            this.$refs.sellerAuth.init()
           }
         },
         addBrand(){
